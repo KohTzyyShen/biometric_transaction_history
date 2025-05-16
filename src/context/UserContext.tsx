@@ -1,25 +1,36 @@
-import React, { createContext, useContext } from "react";
-import PortfolioData from "../data/Portfolio.json";
+import React, { createContext, useContext, useState } from 'react';
+import PortfolioData from '../data/Portfolio.json';
 
-interface User {
+interface UserContextType {
   userId: string;
   username: string;
   passcode: string;
+  setPasscode: (newPasscode: string) => void;
 }
 
-const defaultUser: User = {
+const defaultUser = {
   userId: PortfolioData.Login.userId,
   username: PortfolioData.Login.username,
   passcode: PortfolioData.Login.passcode,
+  setPasscode: () => {},
 };
 
-const UserContext = createContext<User>(defaultUser);
+const UserContext = createContext<UserContextType>(defaultUser);
 
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [passcode, setPasscode] = useState(PortfolioData.Login.passcode);
+
   return (
-    <UserContext.Provider value={defaultUser}>
+    <UserContext.Provider
+      value={{
+        userId: PortfolioData.Login.userId,
+        username: PortfolioData.Login.username,
+        passcode,
+        setPasscode,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

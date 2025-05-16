@@ -1,8 +1,8 @@
-// src/screens/HomeScreen.tsx
 import React from "react";
 import { SafeAreaView, View, Text, Button, StyleSheet, Alert } from "react-native";
 import PortfolioData from "../data/Portfolio.json";
 import { useAuth } from "../context/AuthContext";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen({ navigation }: any) {
   const username = PortfolioData.Login.username;
@@ -10,7 +10,6 @@ export default function HomeScreen({ navigation }: any) {
 
   const handleNavigate = async () => {
     if (isAuthenticated) {
-      // 已认证直接去交易历史页面
       navigation.navigate("Transaction History", { skipPasscode: false });
       return;
     }
@@ -18,48 +17,55 @@ export default function HomeScreen({ navigation }: any) {
     try {
       const localAuthSuccess = await authenticateWithLocalAuth();
       if (localAuthSuccess) {
-        // 生物认证成功
         navigation.navigate("Transaction History", { skipPasscode: false });
       } else {
-        // 认证失败，弹窗选择
         Alert.alert(
           "Authentication failed",
           "Would you like to try again or use Passcode?",
           [
-            {
-              text: "Try Again",
-              onPress: handleNavigate,
-              style: "cancel",
-            },
-            {
-              text: "Use Passcode",
-              onPress: () => navigation.navigate("Passcode"),
-            },
+            { text: "Try Again", onPress: handleNavigate, style: "cancel" },
+            { text: "Use Passcode", onPress: () => navigation.navigate("Passcode") },
           ]
         );
       }
     } catch (error) {
-      // 设备不支持或其他异常，直接跳 Passcode
       navigation.navigate("Passcode");
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topColumn}>
-        <Text style={styles.text1}>Hi {username}</Text>
-        <Text style={styles.text2}>How can I help you today</Text>
-      </View>
+    <LinearGradient
+      // 右上角到左下角渐变
+      colors={[
+        "rgba(0,0,230,0.2)",   // #0000e6 透明度20%
+        "#ffffff",             // 白色 100%
+        "#ffffff",             // 白色 100%
+        "rgba(166,58,255,0.2)" // #A63AFF 透明度20%
+      ]}
+      locations={[0, 0.28, 0.59, 1]}
+      start={{ x: 1, y: 0 }} // 右上角
+      end={{ x: 0, y: 1 }}   // 左下角
+      style={styles.container}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.topColumn}>
+          <Text style={styles.text1}>Hi {username}</Text>
+          <Text style={styles.text2}>How can I help you today</Text>
+        </View>
 
-      <View style={styles.centerButton}>
-        <Button title="Show my transaction" onPress={handleNavigate} />
-      </View>
-    </SafeAreaView>
+        <View style={styles.centerButton}>
+          <Button title="Show my transaction" onPress={handleNavigate} />
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  safeArea: {
     flex: 1,
   },
   topColumn: {
