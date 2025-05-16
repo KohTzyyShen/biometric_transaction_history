@@ -8,7 +8,7 @@ export default function TransactionHistoryDataSummary() {
       <View style={styles.row}>
         <MaterialCommunityIcons name="bitcoin" size={40} color="#f2a900" />
         <View style={styles.totalSpentColumn}>
-          <Text style={styles.totalSpentText}>total spent</Text>
+          <Text style={styles.totalSpentText}>Total spent</Text>
           <Text style={styles.totalSpentAmount}>RM 1000</Text>
         </View>
       </View>
@@ -24,7 +24,7 @@ export default function TransactionHistoryDataSummary() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15,  // 和原来保持一致
+    marginTop: 15,  
   },
   row: {
     flexDirection: 'row',

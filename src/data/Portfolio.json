@@ -1,0 +1,228 @@
+{
+  "Login": {
+    "username": "KohTzyyShen",
+    "passcode": "123456"
+  },
+  "TransactionData": [
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM500",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Payment to Electric Company",
+      "SenderReceiver": "Electric Company",
+      "DateTime": "2025-05-10T14:30:00",
+      "PaymentID": "PMT001",
+      "BankRef": "BR001",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM1200",
+      "TransactionType": "Received",
+      "TransactionDetail": "Salary May 2025",
+      "SenderReceiver": "Employer",
+      "DateTime": "2025-05-01T09:00:00",
+      "PaymentID": "PMT002",
+      "BankRef": "BR002",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM200",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Grocery Shopping",
+      "SenderReceiver": "Supermarket",
+      "DateTime": "2025-05-08T18:45:00",
+      "PaymentID": "PMT003",
+      "BankRef": "BR003",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM100",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Dinner at Restaurant",
+      "SenderReceiver": "Restaurant",
+      "DateTime": "2025-05-07T20:00:00",
+      "PaymentID": "PMT004",
+      "BankRef": "BR004",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM50",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Taxi Fare",
+      "SenderReceiver": "Taxi Service",
+      "DateTime": "2025-05-06T22:15:00",
+      "PaymentID": "PMT005",
+      "BankRef": "BR005",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM300",
+      "TransactionType": "Received",
+      "TransactionDetail": "Refund from Store",
+      "SenderReceiver": "Store",
+      "DateTime": "2025-05-05T12:30:00",
+      "PaymentID": "PMT006",
+      "BankRef": "BR006",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM400",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Online Shopping",
+      "SenderReceiver": "E-commerce",
+      "DateTime": "2025-05-04T15:20:00",
+      "PaymentID": "PMT007",
+      "BankRef": "BR007",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM150",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Movie Tickets",
+      "SenderReceiver": "Cinema",
+      "DateTime": "2025-05-03T19:00:00",
+      "PaymentID": "PMT008",
+      "BankRef": "BR008",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM250",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Utility Bill",
+      "SenderReceiver": "Utility Company",
+      "DateTime": "2025-05-02T10:00:00",
+      "PaymentID": "PMT009",
+      "BankRef": "BR009",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM700",
+      "TransactionType": "Received",
+      "TransactionDetail": "Bonus Payment",
+      "SenderReceiver": "Employer",
+      "DateTime": "2025-04-30T09:00:00",
+      "PaymentID": "PMT010",
+      "BankRef": "BR010",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM600",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Car Maintenance",
+      "SenderReceiver": "Auto Service",
+      "DateTime": "2025-04-29T11:30:00",
+      "PaymentID": "PMT011",
+      "BankRef": "BR011",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM350",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Gift Purchase",
+      "SenderReceiver": "Gift Shop",
+      "DateTime": "2025-04-28T17:00:00",
+      "PaymentID": "PMT012",
+      "BankRef": "BR012",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM80",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Coffee Shop",
+      "SenderReceiver": "Cafe",
+      "DateTime": "2025-04-27T08:30:00",
+      "PaymentID": "PMT013",
+      "BankRef": "BR013",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM900",
+      "TransactionType": "Received",
+      "TransactionDetail": "Freelance Project",
+      "SenderReceiver": "Client",
+      "DateTime": "2025-04-26T14:45:00",
+      "PaymentID": "PMT014",
+      "BankRef": "BR014",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM45",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Parking Fee",
+      "SenderReceiver": "Parking Lot",
+      "DateTime": "2025-04-25T16:00:00",
+      "PaymentID": "PMT015",
+      "BankRef": "BR015",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM100",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Library Fee",
+      "SenderReceiver": "Library",
+      "DateTime": "2025-04-24T10:00:00",
+      "PaymentID": "PMT016",
+      "BankRef": "BR016",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM200",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Gym Membership",
+      "SenderReceiver": "Gym",
+      "DateTime": "2025-04-23T18:00:00",
+      "PaymentID": "PMT017",
+      "BankRef": "BR017",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM400",
+      "TransactionType": "Received",
+      "TransactionDetail": "Sold Old Laptop",
+      "SenderReceiver": "Buyer",
+      "DateTime": "2025-04-22T14:30:00",
+      "PaymentID": "PMT018",
+      "BankRef": "BR018",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM60",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Mobile Data Top-up",
+      "SenderReceiver": "Telco",
+      "DateTime": "2025-04-21T09:15:00",
+      "PaymentID": "PMT019",
+      "BankRef": "BR019",
+      "Status": "Completed"
+    },
+    {
+      "UserId": "KohTzyyShen",
+      "Amount": "RM500",
+      "TransactionType": "Moved",
+      "TransactionDetail": "Water Bill",
+      "SenderReceiver": "Water Company",
+      "DateTime": "2025-04-20T11:00:00",
+      "PaymentID": "PMT020",
+      "BankRef": "BR020",
+      "Status": "Completed"
+    }
+  ]
+}

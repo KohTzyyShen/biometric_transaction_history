@@ -1,40 +1,57 @@
-import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import TransactionHistoryDataCard from '../component/TransactionHistoryDataCard';
-import TransactionHistoryDataSummary from '../component/TransactionHistoryDataSummary';  // 新引入
+import React from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import TransactionHistoryDataCard from "../component/TransactionHistoryDataCard";
+import TransactionHistoryDataSummary from "../component/TransactionHistoryDataSummary";
 
-const dummyData = [
-  {
-    senderReceiver: 'Rainly',
-    amount: 'RM500',
-    transactionType: 'Moved',
-    dateTime: '14 May 2025',
-  },
-  {
-    senderReceiver: 'John',
-    amount: 'RM300',
-    transactionType: 'Received',
-    dateTime: '13 May 2025',
-  },
-];
+import PortfolioData from "../data/Portfolio.json";
 
 export default function TransactionHistoryScreen({ navigation }: any) {
+  {
+    /* Get Transaction Data Required*/
+  }
+  const filteredData = PortfolioData.TransactionData.map((tx) => ({
+    senderReceiver: tx.SenderReceiver,
+    amount: tx.Amount,
+    transactionType: tx.TransactionType,
+    dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+  }));
+
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={styles.backIcon}
+        onPress={() => navigation.goBack()}
+      >
         <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
       </TouchableOpacity>
 
-      {/* 调用拆分后的组件 */}
+      {/* Transaction History Data Summary*/}
       <TransactionHistoryDataSummary />
 
+      {/* Transaction Section*/}
       <View style={styles.transactionSection}>
+        {/* Transaction Header*/}
         <View style={styles.transactionHeader}>
           <Text style={styles.transactionTitle}>Transaction</Text>
           <MaterialIcons name="filter-list" size={24} color="black" />
         </View>
-        <TransactionHistoryDataCard data={dummyData} />
+
+        {/*Transaction Data*/}
+        <ScrollView style={{ flex: 1 }}>
+          <TransactionHistoryDataCard data={filteredData} />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -57,14 +74,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   transactionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
     paddingHorizontal: 5,
   },
   transactionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

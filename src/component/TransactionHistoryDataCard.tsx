@@ -22,7 +22,6 @@ export default function TransactionHistoryDataCard({ data }: Props) {
             <Text style={styles.amount}>{item.amount}</Text>
           </View>
 
-          {/* 新增的 column 包裹 transactionType 和 line */}
           <View style={styles.transactionAndLine}>
             <View style={styles.row}>
               <Text style={styles.transactionType}>{item.transactionType}</Text>
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
   },
   transactionAndLine: {
     flexDirection: 'column',
-    gap: 13,  // 这里是你想要的间距
+    gap: 13,  
   },
   row: {
     flexDirection: 'row',
