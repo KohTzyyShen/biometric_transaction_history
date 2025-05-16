@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 type Props = {
-  totalAmount?: number;  
-  skipPasscode: boolean; 
+  totalAmount?: number;
+  skipPasscode: boolean;
 };
 
 export default function TransactionHistoryDataSummary({ totalAmount, skipPasscode }: Props) {
-
   function formatAmount(amount?: number): string {
     if (amount === undefined || amount === null) return '';
     const sign = amount >= 0 ? '+' : '-';
@@ -18,7 +18,7 @@ export default function TransactionHistoryDataSummary({ totalAmount, skipPasscod
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <MaterialCommunityIcons name="bitcoin" size={40} color="#f2a900" />
+        <FontAwesome name="bitcoin" size={40} color="#0000e6" />
         <View style={styles.totalSpentColumn}>
           <Text style={styles.totalSpentText}>Total amount</Text>
           <Text style={styles.totalSpentAmount}>
@@ -28,9 +28,12 @@ export default function TransactionHistoryDataSummary({ totalAmount, skipPasscod
       </View>
 
       <View style={[styles.row, styles.dateRow]}>
-        <Text style={styles.dateText}>16 May 2025</Text>
-        <Text style={styles.dateSeparator}>-</Text>
-        <Text style={styles.dateText}>17 May 2025</Text>
+        <View style={styles.dateContent}>
+          <Text style={styles.dateText}>16 May 2025</Text>
+          <Text style={styles.dateSeparator}>-</Text>
+          <Text style={styles.dateText}>17 May 2025</Text>
+        </View>
+        <AntDesign name="calendar" size={24} color="black" />
       </View>
     </View>
   );
@@ -59,9 +62,13 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   dateRow: {
-    paddingHorizontal: 10,
     marginTop: 15,
-    gap: 5,
+    justifyContent: 'space-between',
+  },
+  dateContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   dateText: {
     fontSize: 14,
