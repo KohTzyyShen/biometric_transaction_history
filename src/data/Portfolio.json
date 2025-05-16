@@ -7,7 +7,7 @@
   "TransactionData": [
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM500",
+      "Amount": 500,
       "TransactionType": "Moved",
       "TransactionDetail": "Payment to Electric Company",
       "SenderReceiver": "Electric Company",
@@ -18,7 +18,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM1200",
+      "Amount": 1200,
       "TransactionType": "Received",
       "TransactionDetail": "Salary May 2025",
       "SenderReceiver": "Employer",
@@ -29,7 +29,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM200",
+      "Amount": 200,
       "TransactionType": "Moved",
       "TransactionDetail": "Grocery Shopping",
       "SenderReceiver": "Supermarket",
@@ -40,7 +40,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM100",
+      "Amount": 100,
       "TransactionType": "Moved",
       "TransactionDetail": "Dinner at Restaurant",
       "SenderReceiver": "Restaurant",
@@ -51,7 +51,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM50",
+      "Amount": 50,
       "TransactionType": "Moved",
       "TransactionDetail": "Taxi Fare",
       "SenderReceiver": "Taxi Service",
@@ -62,7 +62,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM300",
+      "Amount": 300,
       "TransactionType": "Received",
       "TransactionDetail": "Refund from Store",
       "SenderReceiver": "Store",
@@ -73,7 +73,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM400",
+      "Amount": 400,
       "TransactionType": "Moved",
       "TransactionDetail": "Online Shopping",
       "SenderReceiver": "E-commerce",
@@ -84,7 +84,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM150",
+      "Amount": 150,
       "TransactionType": "Moved",
       "TransactionDetail": "Movie Tickets",
       "SenderReceiver": "Cinema",
@@ -95,7 +95,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM250",
+      "Amount": 250,
       "TransactionType": "Moved",
       "TransactionDetail": "Utility Bill",
       "SenderReceiver": "Utility Company",
@@ -106,7 +106,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM700",
+      "Amount": 700,
       "TransactionType": "Received",
       "TransactionDetail": "Bonus Payment",
       "SenderReceiver": "Employer",
@@ -117,7 +117,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM600",
+      "Amount": 600,
       "TransactionType": "Moved",
       "TransactionDetail": "Car Maintenance",
       "SenderReceiver": "Auto Service",
@@ -128,7 +128,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM350",
+      "Amount": 350,
       "TransactionType": "Moved",
       "TransactionDetail": "Gift Purchase",
       "SenderReceiver": "Gift Shop",
@@ -139,7 +139,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM80",
+      "Amount": 80,
       "TransactionType": "Moved",
       "TransactionDetail": "Coffee Shop",
       "SenderReceiver": "Cafe",
@@ -150,7 +150,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM900",
+      "Amount": 900,
       "TransactionType": "Received",
       "TransactionDetail": "Freelance Project",
       "SenderReceiver": "Client",
@@ -161,7 +161,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM45",
+      "Amount": 45,
       "TransactionType": "Moved",
       "TransactionDetail": "Parking Fee",
       "SenderReceiver": "Parking Lot",
@@ -172,7 +172,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM100",
+      "Amount": 100,
       "TransactionType": "Moved",
       "TransactionDetail": "Library Fee",
       "SenderReceiver": "Library",
@@ -183,7 +183,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM200",
+      "Amount": 200,
       "TransactionType": "Moved",
       "TransactionDetail": "Gym Membership",
       "SenderReceiver": "Gym",
@@ -194,7 +194,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM400",
+      "Amount": 400,
       "TransactionType": "Received",
       "TransactionDetail": "Sold Old Laptop",
       "SenderReceiver": "Buyer",
@@ -205,7 +205,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM60",
+      "Amount": 60,
       "TransactionType": "Moved",
       "TransactionDetail": "Mobile Data Top-up",
       "SenderReceiver": "Telco",
@@ -216,7 +216,7 @@
     },
     {
       "UserId": "KohTzyyShen",
-      "Amount": "RM500",
+      "Amount": 500,
       "TransactionType": "Moved",
       "TransactionDetail": "Water Bill",
       "SenderReceiver": "Water Company",

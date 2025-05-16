@@ -10,6 +10,10 @@ export default function PasscodeScreen({ navigation }: any) {
           title="Skip"
           onPress={() => navigation.navigate('Transaction History', { skipPasscode: true })}
         />
+        <Button
+          title="Correct"
+          onPress={() => navigation.navigate('Transaction History', { skipPasscode: false })}
+        />
       </View>
     </SafeAreaView>
   );

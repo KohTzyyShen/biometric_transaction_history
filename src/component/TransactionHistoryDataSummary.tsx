@@ -2,14 +2,21 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function TransactionHistoryDataSummary() {
+type Props = {
+  totalAmount?: number;  // 总金额，选传
+  skipPasscode: boolean; // 是否跳过密码，决定金额是否隐藏
+};
+
+export default function TransactionHistoryDataSummary({ totalAmount, skipPasscode }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <MaterialCommunityIcons name="bitcoin" size={40} color="#f2a900" />
         <View style={styles.totalSpentColumn}>
           <Text style={styles.totalSpentText}>Total spent</Text>
-          <Text style={styles.totalSpentAmount}>RM 1000</Text>
+          <Text style={styles.totalSpentAmount}>
+            {skipPasscode || totalAmount === undefined ? '****' : `RM ${totalAmount.toFixed(2)}`}
+          </Text>
         </View>
       </View>
 
@@ -24,7 +31,7 @@ export default function TransactionHistoryDataSummary() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15,  
+    marginTop: 15,
   },
   row: {
     flexDirection: 'row',
