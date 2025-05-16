@@ -12,21 +12,23 @@ import TransactionHistoryDataCard from "../component/TransactionHistoryDataCard"
 import TransactionHistoryDataSummary from "../component/TransactionHistoryDataSummary";
 
 import PortfolioData from "../data/Portfolio.json";
+import { useUser } from "../context/UserContext"; 
 
 export default function TransactionHistoryScreen({ navigation }: any) {
-  {
-    /* Get Transaction Data Required*/
-  }
-  const filteredData = PortfolioData.TransactionData.map((tx) => ({
-    senderReceiver: tx.SenderReceiver,
-    amount: tx.Amount,
-    transactionType: tx.TransactionType,
-    dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-  }));
+  const { userId } = useUser(); 
+
+  const filteredData = PortfolioData.TransactionData
+    .filter((tx) => tx.UserId === userId)
+    .map((tx) => ({
+      senderReceiver: tx.SenderReceiver,
+      amount: tx.Amount,
+      transactionType: tx.TransactionType,
+      dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+    }));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,18 +39,18 @@ export default function TransactionHistoryScreen({ navigation }: any) {
         <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
       </TouchableOpacity>
 
-      {/* Transaction History Data Summary*/}
+      {/* Transaction Summary */}
       <TransactionHistoryDataSummary />
 
-      {/* Transaction Section*/}
+      {/* Transaction Section */}
       <View style={styles.transactionSection}>
-        {/* Transaction Header*/}
+        {/* Header */}
         <View style={styles.transactionHeader}>
           <Text style={styles.transactionTitle}>Transaction</Text>
           <MaterialIcons name="filter-list" size={24} color="black" />
         </View>
 
-        {/*Transaction Data*/}
+        {/* Transaction Data List */}
         <ScrollView style={{ flex: 1 }}>
           <TransactionHistoryDataCard data={filteredData} />
         </ScrollView>
