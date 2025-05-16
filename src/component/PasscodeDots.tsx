@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   dotContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 25,
   },
   dot: {
-    fontSize: 30,
+    fontSize: 18,
     marginHorizontal: 8,
   },
   filledDot: {

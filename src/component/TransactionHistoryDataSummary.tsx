@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Calendar, DateData } from 'react-native-calendars';
 
 type Props = {
   totalAmount?: number;
@@ -19,32 +19,89 @@ export default function TransactionHistoryDataSummary({
   endDate,
   onDateChange,
 }: Props) {
-  const [showStartPicker, setShowStartPicker] = useState(false);
-  const [showEndPicker, setShowEndPicker] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [rangeStart, setRangeStart] = useState<string>(startDate.toISOString().slice(0, 10));
+  const [rangeEnd, setRangeEnd] = useState<string>(endDate.toISOString().slice(0, 10));
+  const [selectingStart, setSelectingStart] = useState(true); // 标记是选开始日期还是结束日期
 
+  // 格式化金额，带正负号
   function formatAmount(amount?: number): string {
     if (amount === undefined || amount === null) return '';
     const sign = amount >= 0 ? '+' : '-';
-return `${sign}RM${Math.abs(amount).toFixed(2)}`;
+    return `${sign}RM${Math.abs(amount).toFixed(2)}`;
   }
 
+  // 格式化日期为 "D MMM YYYY" 格式
   function formatDate(date: Date): string {
-    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
   }
 
-  const onChangeStart = (event: any, selectedDate?: Date) => {
-    setShowStartPicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      onDateChange(selectedDate, endDate); // 调用合并的回调
+  // 生成 markedDates，用于 react-native-calendars 的 period 标记
+  const generateMarkedDates = () => {
+    if (!rangeStart || !rangeEnd) return {};
+
+    let start = new Date(rangeStart);
+    let end = new Date(rangeEnd);
+
+    if (start > end) {
+      [start, end] = [end, start];
     }
+
+    const marked: Record<string, any> = {};
+
+    let current = new Date(start);
+    while (current <= end) {
+      const dateStr = current.toISOString().slice(0, 10);
+      if (dateStr === rangeStart) {
+        marked[dateStr] = {
+          startingDay: true,
+          color: '#00adf5',
+          textColor: 'white',
+        };
+      } else if (dateStr === rangeEnd) {
+        marked[dateStr] = {
+          endingDay: true,
+          color: '#00adf5',
+          textColor: 'white',
+        };
+      } else {
+        marked[dateStr] = {
+          color: '#d0e8ff',
+          textColor: 'black',
+        };
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    return marked;
   };
 
-  const onChangeEnd = (event: any, selectedDate?: Date) => {
-    setShowEndPicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      onDateChange(startDate, selectedDate); // 调用合并的回调
+  // 点击日历某天的处理逻辑
+const onDayPress = (day: DateData) => {
+  if (selectingStart) {
+    setRangeStart(day.dateString);
+    if (new Date(day.dateString) > new Date(rangeEnd)) {
+      setRangeEnd(day.dateString);
     }
-  };
+    onDateChange(new Date(day.dateString), new Date(rangeEnd));
+    setSelectingStart(false);
+  } else {
+    if (new Date(day.dateString) < new Date(rangeStart)) {
+      setRangeStart(day.dateString);
+      onDateChange(new Date(day.dateString), new Date(rangeEnd));
+    } else {
+      setRangeEnd(day.dateString);
+      onDateChange(new Date(rangeStart), new Date(day.dateString));
+    }
+    setSelectingStart(true);
+    setShowCalendar(false);
+  }
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -58,40 +115,43 @@ return `${sign}RM${Math.abs(amount).toFixed(2)}`;
         </View>
       </View>
 
-      <View style={[styles.row, styles.dateRow]}>
+      <TouchableOpacity style={[styles.row, styles.dateRow]} onPress={() => setShowCalendar(true)}>
         <View style={styles.dateContent}>
-          <TouchableOpacity onPress={() => setShowStartPicker(true)}>
-            <Text style={styles.dateText}>{formatDate(startDate)}</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.dateSeparator}>-</Text>
-
-          <TouchableOpacity onPress={() => setShowEndPicker(true)}>
-            <Text style={styles.dateText}>{formatDate(endDate)}</Text>
-          </TouchableOpacity>
+          <Text style={styles.dateText}>{formatDate(new Date(rangeStart))}</Text>
+          <Text style={styles.dateSeparator}> - </Text>
+          <Text style={styles.dateText}>{formatDate(new Date(rangeEnd))}</Text>
         </View>
         <AntDesign name="calendar" size={24} color="black" />
-      </View>
+      </TouchableOpacity>
 
-      {showStartPicker && (
-        <DateTimePicker
-          value={startDate}
-          mode="date"
-          display="default"
-          onChange={onChangeStart}
-          maximumDate={endDate}
-        />
-      )}
-
-      {showEndPicker && (
-        <DateTimePicker
-          value={endDate}
-          mode="date"
-          display="default"
-          onChange={onChangeEnd}
-          minimumDate={startDate}
-        />
-      )}
+      <Modal visible={showCalendar} transparent animationType="fade">
+        <TouchableOpacity
+          style={styles.modalBackground}
+          activeOpacity={1}
+          onPressOut={() => setShowCalendar(false)}
+        >
+          <View style={styles.calendarContainer}>
+            <Calendar
+              markingType="period"
+              markedDates={generateMarkedDates()}
+              onDayPress={onDayPress}
+              // current={rangeStart}
+              firstDay={1}
+              theme={{
+                selectedDayBackgroundColor: '#00adf5',
+                selectedDayTextColor: '#ffffff',
+                todayTextColor: '#00adf5',
+                dayTextColor: '#2d4150',
+                textDisabledColor: '#d9e1e8',
+                arrowColor: '#00adf5',
+              }}
+            />
+            <Text style={{textAlign:'center',marginTop:5, color:'#555'}}>
+              {selectingStart ? 'Select start date' : 'Select end date'}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 }
@@ -99,21 +159,19 @@ return `${sign}RM${Math.abs(amount).toFixed(2)}`;
 const styles = StyleSheet.create({
   container: {
     marginTop: 15,
-    backgroundColor: 'white',  
-    borderRadius: 10, 
+    backgroundColor: 'white',
+    borderRadius: 10,
     marginHorizontal: 20,
 
-    // iOS 阴影
     shadowColor: '#000',
     shadowOffset: { width: 8, height: 8 },
-    shadowOpacity: 0.1,  
+    shadowOpacity: 0.1,
     shadowRadius: 20,
 
-    // Android 阴影
     elevation: 4,
 
-    paddingHorizontal:15,
-    paddingVertical:8,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
   },
   row: {
     flexDirection: 'row',
@@ -135,8 +193,7 @@ const styles = StyleSheet.create({
   },
   dateRow: {
     marginTop: 15,
-   gap:15.
-    // justifyContent: 'space-between',
+    gap: 15,
   },
   dateContent: {
     flexDirection: 'row',
@@ -151,5 +208,16 @@ const styles = StyleSheet.create({
   dateSeparator: {
     fontSize: 14,
     color: '#000',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: '#00000066',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  calendarContainer: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
   },
 });

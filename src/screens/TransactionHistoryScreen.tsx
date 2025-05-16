@@ -55,12 +55,15 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
 
-  const filteredData: TransactionData[] = PortfolioData.TransactionData
-    .filter(tx => tx.UserId === userId)
-    .filter(tx => {
-      const txDate = new Date(tx.DateTime);
-      return txDate >= startDate && txDate <= endDate;
-    })
+const filteredData: TransactionData[] = PortfolioData.TransactionData
+  .filter(tx => tx.UserId === userId)
+  .filter(tx => {
+    const txDateStr = new Date(tx.DateTime).toISOString().slice(0, 10);
+    const startStr = startDate.toISOString().slice(0, 10);
+    const endStr = endDate.toISOString().slice(0, 10);
+    return txDateStr >= startStr && txDateStr <= endStr;
+  })
+
     .map(tx => ({
       senderReceiver: tx.SenderReceiver,
       amount: skipPasscode ? "****" : String(tx.Amount),
@@ -89,22 +92,32 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
       }),
     }));
 
+const isDateInRange = (date: Date, start: Date, end: Date) => {
+  // 只比较日期部分（年月日），忽略时间
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+  return d >= s && d <= e;
+};
+
 const totalAmount = !skipPasscode
   ? PortfolioData.TransactionData
       .filter((tx) => tx.UserId === userId)
       .filter((tx) => {
         const txDate = new Date(tx.DateTime);
-        return txDate >= startDate && txDate <= endDate;
+        return isDateInRange(txDate, startDate, endDate);
       })
       .reduce((acc, tx) => {
         const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
         if (isNaN(numericValue)) return acc;
 
+        // 根据交易类型确定金额正负
         const signedValue = tx.TransactionType === "Moved" ? -Math.abs(numericValue) : Math.abs(numericValue);
 
         return acc + signedValue;
       }, 0)
   : 0;
+
 
 
   const handlePressItem = (item: TransactionData) => {

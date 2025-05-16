@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 0,
+    marginHorizontal: 10,
     marginTop: 35,
     height: 32,
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '600',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   forgotcontainer: {
     alignItems: 'center',

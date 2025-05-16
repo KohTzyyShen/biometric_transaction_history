@@ -105,10 +105,11 @@ const styles = StyleSheet.create({
   variableLabel: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#333",
+    color: "#bababa",
   },
   variableValue: {
     fontSize: 18,
+    fontWeight: "600",
     color: "#000",
     marginTop: 0,
   },
