@@ -1,3 +1,4 @@
+// src/screens/HomeScreen.tsx
 import React from 'react';
 import { SafeAreaView, View, Text, Button, StyleSheet } from 'react-native';
 import PortfolioData from '../data/Portfolio.json';
@@ -9,9 +10,9 @@ export default function HomeScreen({ navigation }: any) {
 
   const handleNavigate = () => {
     if (!isAuthenticated) {
-      navigation.navigate('Passcode'); // 未认证跳Passcode输入页
+      navigation.navigate('Passcode'); // 未认证跳 Passcode 页面
     } else {
-      navigation.navigate('Transaction History'); // 已认证直接跳交易历史
+      navigation.navigate('Transaction History', { skipPasscode: false }); // 已认证直接跳交易历史，金额不遮挡
     }
   };
 
