@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   skipText: {
-    color: '#0000e6',
+    color: '#007bff',
     fontSize: 16,
   },
   body: {
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
   forgottext: {
     fontSize: 16,
-    color: '#0000e6',
+    color: '#007bff',
   },
 });

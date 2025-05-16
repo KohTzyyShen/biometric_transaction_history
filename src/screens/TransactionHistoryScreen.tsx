@@ -1,4 +1,6 @@
+import { Alert } from 'react-native';
 import React, { useState, useCallback } from "react";
+import { useAuth } from "../context/AuthContext";
 
 import {
   SafeAreaView,
@@ -93,7 +95,6 @@ const filteredData: TransactionData[] = PortfolioData.TransactionData
     }));
 
 const isDateInRange = (date: Date, start: Date, end: Date) => {
-  // 只比较日期部分（年月日），忽略时间
   const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
   const e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
@@ -111,7 +112,6 @@ const totalAmount = !skipPasscode
         const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
         if (isNaN(numericValue)) return acc;
 
-        // 根据交易类型确定金额正负
         const signedValue = tx.TransactionType === "Moved" ? -Math.abs(numericValue) : Math.abs(numericValue);
 
         return acc + signedValue;
@@ -120,10 +120,34 @@ const totalAmount = !skipPasscode
 
 
 
-  const handlePressItem = (item: TransactionData) => {
-    setSelectedTransaction(item);
-    setModalVisible(true);
-  };
+const { isAuthenticated, authenticateWithLocalAuth } = useAuth();
+
+const handlePressItem = async (item: TransactionData) => {
+  if (!isAuthenticated) {
+    try {
+      const authSuccess = await authenticateWithLocalAuth();
+      if (!authSuccess) {
+        Alert.alert(
+          "Authentication Required",
+          "Please verify your identity to view transaction details.",
+          [
+            { text: "Use Passcode", onPress: () => navigation.navigate("Passcode") },
+            { text: "Cancel", style: "cancel" },
+          ]
+        );
+        return; // 停止继续
+      }
+    } catch (error) {
+      navigation.navigate("Passcode");
+      return;
+    }
+  }
+
+  // 已验证或验证成功
+  setSelectedTransaction(item);
+  setModalVisible(true);
+};
+
 
   const handleCloseModal = () => {
     setModalVisible(false);
