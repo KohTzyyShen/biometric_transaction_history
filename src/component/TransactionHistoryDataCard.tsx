@@ -21,11 +21,15 @@ export default function TransactionHistoryDataCard({ data }: Props) {
             <Text style={styles.senderReceiver}>{item.senderReceiver}</Text>
             <Text style={styles.amount}>{item.amount}</Text>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.transactionType}>{item.transactionType}</Text>
-            <Text style={styles.dateTime}>{item.dateTime}</Text>
+
+          {/* 新增的 column 包裹 transactionType 和 line */}
+          <View style={styles.transactionAndLine}>
+            <View style={styles.row}>
+              <Text style={styles.transactionType}>{item.transactionType}</Text>
+              <Text style={styles.dateTime}>{item.dateTime}</Text>
+            </View>
+            <View style={styles.line} />
           </View>
-          <View style={styles.line} />
         </View>
       ))}
     </View>
@@ -34,18 +38,22 @@ export default function TransactionHistoryDataCard({ data }: Props) {
 
 const styles = StyleSheet.create({
   listContainer: {
-    marginHorizontal: 5,
+    marginHorizontal:10,
     flexDirection: 'column',
-    gap: 13, 
+    gap: 13,
   },
   cardContainer: {
     width: '100%',
     flexDirection: 'column',
     gap: 5,
   },
+  transactionAndLine: {
+    flexDirection: 'column',
+    gap: 13,  // 这里是你想要的间距
+  },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
     width: '100%',
   },
   senderReceiver: {

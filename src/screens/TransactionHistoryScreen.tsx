@@ -1,29 +1,40 @@
 import React from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import TransactionHistoryDataCard from '../component/TransactionHistoryDataCard';
+import TransactionHistoryDataSummary from '../component/TransactionHistoryDataSummary';  // 新引入
+
+const dummyData = [
+  {
+    senderReceiver: 'Rainly',
+    amount: 'RM500',
+    transactionType: 'Moved',
+    dateTime: '14 May 2025',
+  },
+  {
+    senderReceiver: 'John',
+    amount: 'RM300',
+    transactionType: 'Received',
+    dateTime: '13 May 2025',
+  },
+];
 
 export default function TransactionHistoryScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
-  <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
-</TouchableOpacity>
+        <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
+      </TouchableOpacity>
 
-      <View style={styles.content}>
+      {/* 调用拆分后的组件 */}
+      <TransactionHistoryDataSummary />
 
-        <View style={styles.row}>
-          <MaterialCommunityIcons name="bitcoin" size={40} color="#f2a900" />
-          <View style={styles.totalSpentColumn}>
-            <Text style={styles.totalSpentText}>total spent</Text>
-            <Text style={styles.totalSpentAmount}>RM 1000</Text>
-          </View>
+      <View style={styles.transactionSection}>
+        <View style={styles.transactionHeader}>
+          <Text style={styles.transactionTitle}>Transaction</Text>
+          <MaterialIcons name="filter-list" size={24} color="black" />
         </View>
-
-        <View style={[styles.row, styles.dateRow]}>
-          <Text style={styles.dateText}>16 May 2025</Text>
-          <Text style={styles.dateSeparator}>-</Text>
-          <Text style={styles.dateText}>17 May 2025</Text>
-        </View>
+        <TransactionHistoryDataCard data={dummyData} />
       </View>
     </SafeAreaView>
   );
@@ -36,41 +47,24 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     marginTop: 35,
-    width: 40,  
+    width: 40,
     height: 30,
   },
-  content: {
-    marginTop: 15,  // y=80
+  transactionSection: {
+    marginHorizontal: 5,
+    marginTop: 60,
+    gap: 20,
+    flex: 1,
   },
-  row: {
+  transactionHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    gap: 10,
+    width: '100%',
+    paddingHorizontal: 5,
   },
-  totalSpentColumn: {
-    marginLeft: 10,
-  },
-  totalSpentText: {
-    fontSize: 16,
-    color: '#000',
-  },
-  totalSpentAmount: {
+  transactionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000',
-  },
-  dateRow: {
-    paddingHorizontal: 10,
-    marginTop: 15,
-    gap: 5,
-  },
-  dateText: {
-    fontSize: 14,
-    color: '#000',
-  },
-  dateSeparator: {
-    fontSize: 14,
-    color: '#000',
   },
 });
