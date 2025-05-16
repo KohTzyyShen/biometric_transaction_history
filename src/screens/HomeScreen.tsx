@@ -3,6 +3,9 @@ import { SafeAreaView, View, Text, Button, StyleSheet, Alert } from "react-nativ
 import PortfolioData from "../data/Portfolio.json";
 import { useAuth } from "../context/AuthContext";
 import { LinearGradient } from "expo-linear-gradient";
+import strings from "../constants/strings";
+
+
 
 export default function HomeScreen({ navigation }: any) {
   const username = PortfolioData.Login.username;

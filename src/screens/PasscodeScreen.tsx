@@ -15,23 +15,24 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useUser } from '../context/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import strings from '../constants/strings';
 
-export default function PasscodeScreen({ navigation }: any) {
+export default function passcodescreen({ navigation }: any) {
   const { authenticate } = useAuth();
-  const { passcode: userPasscode } = useUser();
-  const [input, setInput] = useState('');
-  const [keyboardHeight] = useState(new Animated.Value(20));
+  const { passcode: userpasscode } = useUser();
+  const [input, setinput] = useState('');
+  const [keyboardheight] = useState(new Animated.Value(20));
 
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
-      Animated.timing(keyboardHeight, {
+      Animated.timing(keyboardheight, {
         toValue: e.endCoordinates.height + 20,
         duration: 250,
         useNativeDriver: false,
       }).start();
     });
     const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-      Animated.timing(keyboardHeight, {
+      Animated.timing(keyboardheight, {
         toValue: 20,
         duration: 250,
         useNativeDriver: false,
@@ -46,15 +47,15 @@ export default function PasscodeScreen({ navigation }: any) {
   useEffect(() => {
     if (input.length === 6) {
       Keyboard.dismiss();
-      if (input === userPasscode) {
+      if (input === userpasscode) {
         authenticate().then(() => {
           navigation.navigate('Transaction History', { skipPasscode: false });
         });
       } else {
         Alert.alert(
-          'Incorrect passcode',
-          'Please try again',
-          [{ text: 'Try Again', onPress: () => setInput('') }],
+          strings.incorrect_passcode_title,
+          strings.incorrect_passcode_message,
+          [{ text: strings.try_again, onPress: () => setinput('') }],
           { cancelable: false }
         );
       }
@@ -68,29 +69,38 @@ export default function PasscodeScreen({ navigation }: any) {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
     >
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.backIcon} onPress={() => navigation.navigate('Home')}>
-          <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
-        </TouchableOpacity>
+       <View style={styles.topRow}>
+  <TouchableOpacity style={styles.backicon} onPress={() => navigation.navigate('Home')}>
+    <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.skipButton}
+    onPress={() => navigation.navigate('Transaction History', { skipPasscode: true })}
+  >
+    <Text style={styles.skipText}>Skip</Text>
+  </TouchableOpacity>
+</View>
 
         <View style={styles.body}>
-          <Text style={styles.title}>Enter Pass code</Text>
+          <Text style={styles.title}>{strings.enter_passcode}</Text>
           <Text style={styles.result}>{input}</Text>
 
-          <View style={styles.inputRow}>
+          <View style={styles.inputrow}>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               maxLength={6}
               value={input}
-              onChangeText={(text) => setInput(text.replace(/[^0-9]/g, ''))}
+              onChangeText={(text) => setinput(text.replace(/[^0-9]/g, ''))}
               autoFocus
             />
           </View>
         </View>
 
-        <Animated.View style={[styles.forgotContainer, { marginBottom: keyboardHeight }]}>
-          <TouchableOpacity onPress={() => Alert.alert('Reset passcode')}>
-            <Text style={styles.forgotText}>Forgot Passcode?</Text>
+        <Animated.View style={[styles.forgotcontainer, { marginBottom: keyboardheight }]}>
+          <TouchableOpacity onPress={() => Alert.alert(strings.reset_passcode)}>
+            <Text style={styles.forgottext}>{strings.forgot_passcode}</Text>
           </TouchableOpacity>
         </Animated.View>
       </SafeAreaView>
@@ -104,21 +114,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: '#fff',
   },
-  backIcon: {
-    marginTop: 35,
-    marginLeft: 0,
-    width: 32,
-    height: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+ topRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginHorizontal: 0, // same as container paddingHorizontal
+  marginTop: 35, // same as before for backicon
+  height: 32, // same height as backicon for vertical alignment
+},
+backicon: {
+  width: 32,
+  height: 32,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+skipButton: {
+  paddingHorizontal:15,
+  paddingVertical: 5,
+},
+skipText: {
+  color: '#007bff', // to make text transparent as you requested (or use 'Skip' if you want visible)
+  fontSize: 16,
+},
+
   body: {
     flex: 1,
-     marginTop: 55,
+    marginTop: 55,
     alignItems: 'center',
   },
   title: {
-   
     fontSize: 24,
     fontWeight: '600',
     marginBottom: 20,
@@ -128,7 +152,7 @@ const styles = StyleSheet.create({
     letterSpacing: 8,
     marginBottom: 20,
   },
-  inputRow: {
+  inputrow: {
     flexDirection: 'row',
   },
   input: {
@@ -139,10 +163,10 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     textAlign: 'center',
   },
-  forgotContainer: {
+  forgotcontainer: {
     alignItems: 'center',
   },
-  forgotText: {
+  forgottext: {
     fontSize: 16,
     color: '#007bff',
     marginBottom: 20,
