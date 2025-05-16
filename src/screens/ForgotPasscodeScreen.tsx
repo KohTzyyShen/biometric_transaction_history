@@ -60,6 +60,7 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
                 maxLength={6}
                 value={newPasscode}
                 onChangeText={(text) => setNewPasscode(text.replace(/[^0-9]/g, ''))}
+                secureTextEntry={true} 
               />
             </View>
 
@@ -71,7 +72,9 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
                 maxLength={6}
                 value={confirmPasscode}
                 onChangeText={(text) => setConfirmPasscode(text.replace(/[^0-9]/g, ''))}
-              />
+                secureTextEntry={true} 
+
+/>
             </View>
           </View>
 
