@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useUser } from '../context/UserContext';
+import strings from '../constants/strings';
 
 export default function ForgotPasscodeScreen({ navigation }: any) {
   const { setPasscode } = useUser();
@@ -20,14 +21,14 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
 
   const handleConfirm = () => {
     if (newPasscode.length !== 6 || confirmPasscode.length !== 6) {
-      Alert.alert('Error', 'Passcode must be 6 digits.');
+      Alert.alert(strings.incorrect_passcode_title, strings.passcode_must_be_6_digits);
     } else if (newPasscode !== confirmPasscode) {
-      Alert.alert('Error', 'Passcodes do not match.');
+      Alert.alert(strings.incorrect_passcode_title, strings.passcodes_do_not_match);
     } else {
       setPasscode(newPasscode);
-      Alert.alert('Success', 'Passcode has been reset.', [
+      Alert.alert(strings.reset_passcode, strings.passcode_reset_success, [
         {
-          text: 'OK',
+          text: strings.ok,
           onPress: () => navigation.navigate('Passcode'),
         },
       ]);
@@ -46,12 +47,13 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
         </TouchableOpacity>
 
         <View style={styles.body}>
-          <Text style={styles.title}>Forgot Passcode?</Text>
-          <Text style={styles.result}>Enter new 6-digit passcode</Text>
-
+          <View style={{ alignItems: 'center', gap: 5 }}>
+    <Text style={styles.title}>{strings.forgot_passcode_title}</Text>
+    <Text style={styles.result}>{strings.forgot_passcode_subtitle}</Text>
+  </View>
           <View style={{ gap: 10 }}>
             <View>
-              <Text style={styles.label}>New Passcode</Text>
+              <Text style={styles.label}>{strings.new_passcode_label}</Text>
               <TextInput
                 style={styles.input}
                 keyboardType="numeric"
@@ -62,7 +64,7 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
             </View>
 
             <View>
-              <Text style={styles.label}>Re-enter New Passcode</Text>
+              <Text style={styles.label}>{strings.confirm_passcode_label}</Text>
               <TextInput
                 style={styles.input}
                 keyboardType="numeric"
@@ -74,7 +76,7 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
           </View>
 
           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-            <Text style={styles.confirmText}>Confirm</Text>
+            <Text style={styles.confirmText}>{strings.reset_passcode}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   body: {
-    marginTop: 90,
+    marginTop: 60,
     alignItems: 'center',
     gap: 60,
   },
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     marginTop: 20,
-    backgroundColor: '#333',
+    backgroundColor: '#007bff',
     paddingHorizontal: 40,
     paddingVertical: 10,
     borderRadius: 8,

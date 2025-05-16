@@ -3,7 +3,8 @@ import { SafeAreaView, View, Text, Button, StyleSheet, Alert } from "react-nativ
 import PortfolioData from "../data/Portfolio.json";
 import { useAuth } from "../context/AuthContext";
 import { LinearGradient } from "expo-linear-gradient";
-import strings from "../constants/strings";
+import Typography from '../styles/typography';
+import { TouchableOpacity } from 'react-native';
 
 
 
@@ -46,19 +47,28 @@ export default function HomeScreen({ navigation }: any) {
         "rgba(166,58,255,0.2)" // #A63AFF 透明度20%
       ]}
       locations={[0, 0.28, 0.59, 1]}
-      start={{ x: 1, y: 0 }} // 右上角
-      end={{ x: 0, y: 1 }}   // 左下角
+      start={{ x: 1, y: 0 }} 
+      end={{ x: 0, y: 1 }}   
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.topColumn}>
-          <Text style={styles.text1}>Hi {username}</Text>
-          <Text style={styles.text2}>How can I help you today</Text>
-        </View>
+       
+<View style={styles.topColumn}>
+  <Text style={[Typography.title1, { color: '#0000e6', marginBottom: 5 }]}>
+    Hi {username}
+  </Text>
+  <Text style={[Typography.body3, { color: '#4f4f4f' }]}>
+    How can I help you today
+  </Text>
+</View>
 
-        <View style={styles.centerButton}>
-          <Button title="Show my transaction" onPress={handleNavigate} />
-        </View>
+<View style={styles.centerButton}>
+  <TouchableOpacity style={styles.customButton} onPress={handleNavigate}>
+    <Text style={[Typography.body3, { color: 'black', textAlign: 'center' }]}>
+      Show my transaction
+    </Text>
+  </TouchableOpacity>
+</View>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -75,18 +85,20 @@ const styles = StyleSheet.create({
     marginTop: 90,
     alignItems: "center",
   },
-  text1: {
-    color: "#0000e6",
-    fontSize: 18,
-    marginBottom: 13,
-  },
-  text2: {
-    color: "#4f4f4f",
-    fontSize: 16,
-  },
   centerButton: {
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 40,
   },
+  customButton: {
+    backgroundColor: '#ffffff',
+    borderRadius: 1000,
+    paddingVertical: 14,
+    shadowColor: '#000000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 8, height: 8 },
+    shadowRadius: 15,
+    elevation: 5, // for Android shadow
+  },
 });
+
