@@ -12,7 +12,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import TransactionHistoryDataCard from "../component/TransactionHistoryDataCard";
 import TransactionHistoryDataSummary from "../component/TransactionHistoryDataSummary";
 import TransactionDetailModal from "../component/TransactionDetailModal";
-import SortModal from "../component/SortModal"; // ✅ 新增
+import SortModal from "../component/SortModal"; 
 
 import PortfolioData from "../data/Portfolio.json";
 import { useUser } from "../context/UserContext";
@@ -37,8 +37,8 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionData | null>(null);
-  const [sortBy, setSortBy] = useState<"date" | "amount">("date"); // ✅ 排序依据
-  const [sortModalVisible, setSortModalVisible] = useState(false); // ✅ 控制排序弹窗
+  const [sortBy, setSortBy] = useState<"date" | "amount">("date"); 
+  const [sortModalVisible, setSortModalVisible] = useState(false); 
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -159,15 +159,17 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    backgroundColor: "white",
+    // 去掉 paddingHorizontal: 20
   },
   backIcon: {
     marginTop: 35,
     width: 40,
     height: 30,
+    marginHorizontal: 20, // 给返回按钮左右留点距离
   },
   transactionSection: {
-    marginHorizontal: 5,
+    marginHorizontal: 20, // 这里改成 20，保持整体左右距离
     marginTop: 60,
     gap: 20,
     flex: 1,
@@ -184,3 +186,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+

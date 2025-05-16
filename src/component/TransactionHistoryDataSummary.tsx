@@ -99,6 +99,21 @@ export default function TransactionHistoryDataSummary({
 const styles = StyleSheet.create({
   container: {
     marginTop: 15,
+    backgroundColor: 'white',  
+    borderRadius: 10, 
+    marginHorizontal: 20,
+
+    // iOS 阴影
+    shadowColor: '#000',
+    shadowOffset: { width: 8, height: 8 },
+    shadowOpacity: 0.1,  
+    shadowRadius: 20,
+
+    // Android 阴影
+    elevation: 4,
+
+    paddingHorizontal:15,
+    paddingVertical:8,
   },
   row: {
     flexDirection: 'row',
@@ -116,11 +131,12 @@ const styles = StyleSheet.create({
   totalSpentAmount: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#0000e6',
   },
   dateRow: {
     marginTop: 15,
-    justifyContent: 'space-between',
+   gap:15.
+    // justifyContent: 'space-between',
   },
   dateContent: {
     flexDirection: 'row',
