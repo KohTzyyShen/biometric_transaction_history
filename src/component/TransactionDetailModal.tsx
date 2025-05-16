@@ -14,7 +14,7 @@ type TransactionData = {
   amount: string;
   transactionType: string;
   dateTime: string;
-  transactionDetail?: string; 
+  transactionDetail?: string;
   paymentID?: string;
   bankRef?: string;
   status?: string;
@@ -26,7 +26,6 @@ type Props = {
   onClose: (event: GestureResponderEvent) => void;
 };
 
-// 金额格式化函数
 function formatAmount(amountString: string): string {
   if (amountString === "****") return "****";
   const amount = parseFloat(amountString.replace(/[^\d.-]/g, ""));
@@ -65,15 +64,6 @@ export default function TransactionDetailModal({ visible, data, onClose }: Props
           </View>
 
           <View style={styles.bottomRow}>
-            <View style={styles.iconRow}>
-              <TouchableOpacity onPress={() => {}}>
-                <MaterialCommunityIcons name="share" size={24} color="#000" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}} style={{ marginLeft: 5 }}>
-                <MaterialCommunityIcons name="file-pdf-box" size={24} color="#000" />
-              </TouchableOpacity>
-            </View>
-
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
@@ -105,28 +95,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   variableList: {
-    gap: 13,
+    // React Native 不支持 gap，可以用 marginBottom 模拟
   },
   variableRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     alignItems: "flex-start",
+    marginBottom: 6,
   },
   variableLabel: {
+    fontSize: 12,
     fontWeight: "600",
+    color: "#333",
   },
   variableValue: {
-    textAlign: "right",
-    flexShrink: 1,
+    fontSize: 18,
+    color: "#000",
+    marginTop: 0,
   },
   bottomRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
-  },
-  iconRow: {
-    flexDirection: "row",
-    gap: 5,
   },
   closeButton: {
     paddingHorizontal: 16,

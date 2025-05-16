@@ -79,18 +79,24 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
       }),
     }));
 
-  const totalAmount = !skipPasscode
-    ? PortfolioData.TransactionData
-        .filter((tx) => tx.UserId === userId)
-        .filter((tx) => {
-          const txDate = new Date(tx.DateTime);
-          return txDate >= startDate && txDate <= endDate;
-        })
-        .reduce((acc, tx) => {
-          const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
-          return acc + (isNaN(numericValue) ? 0 : numericValue);
-        }, 0)
-    : 0;
+const totalAmount = !skipPasscode
+  ? PortfolioData.TransactionData
+      .filter((tx) => tx.UserId === userId)
+      .filter((tx) => {
+        const txDate = new Date(tx.DateTime);
+        return txDate >= startDate && txDate <= endDate;
+      })
+      .reduce((acc, tx) => {
+        const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
+        if (isNaN(numericValue)) return acc;
+
+        // 根据 transactionType 判断金额符号
+        const signedValue = tx.TransactionType === "Moved" ? -Math.abs(numericValue) : Math.abs(numericValue);
+
+        return acc + signedValue;
+      }, 0)
+  : 0;
+
 
   const handlePressItem = (item: TransactionData) => {
     setSelectedTransaction(item);
@@ -186,4 +192,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-

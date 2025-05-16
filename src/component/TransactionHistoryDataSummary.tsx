@@ -25,7 +25,7 @@ export default function TransactionHistoryDataSummary({
   function formatAmount(amount?: number): string {
     if (amount === undefined || amount === null) return '';
     const sign = amount >= 0 ? '+' : '-';
-    return `${sign}RM${Math.abs(amount).toFixed(2)}`;
+return `${sign}RM${Math.abs(amount).toFixed(2)}`;
   }
 
   function formatDate(date: Date): string {

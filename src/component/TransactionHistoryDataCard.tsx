@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 type TransactionData = {
   senderReceiver: string;
-  amount: string; // 注意是字符串类型
+  amount: string;
   transactionType: string;
   dateTime: string;
   transactionDetail?: string;
@@ -19,15 +19,16 @@ type Props = {
 
 export default function TransactionHistoryDataCard({ data, onPressItem }: Props) {
 
-  // 格式化金额，带正负号和货币单位
-  function formatAmount(amountStr: string): string {
-    const amountNum = Number(amountStr);
-    if (isNaN(amountNum)) {
-      return amountStr; // 非数字原样返回
-    }
-    const sign = amountNum >= 0 ? '+' : '-';
-    return `${sign}RM${Math.abs(amountNum)}`;
+
+  function formatAmount(amountStr: string, transactionType: string): string {
+  const amountNum = Number(amountStr);
+  if (isNaN(amountNum)) {
+    return amountStr;
   }
+
+  const sign = transactionType === 'Moved' ? '-' : '+';  
+  return `${sign}RM${Math.abs(amountNum)}`;
+}
 
   return (
     <View style={styles.listContainer}>
@@ -40,7 +41,7 @@ export default function TransactionHistoryDataCard({ data, onPressItem }: Props)
         >
           <View style={styles.row}>
             <Text style={styles.senderReceiver}>{item.senderReceiver}</Text>
-            <Text style={styles.amount}>{formatAmount(item.amount)}</Text>
+<Text style={styles.amount}>{formatAmount(item.amount, item.transactionType)}</Text>
           </View>
 
           <View style={styles.transactionAndLine}>
