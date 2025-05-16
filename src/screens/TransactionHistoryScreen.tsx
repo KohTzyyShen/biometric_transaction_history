@@ -12,12 +12,12 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import TransactionHistoryDataCard from "../component/TransactionHistoryDataCard";
 import TransactionHistoryDataSummary from "../component/TransactionHistoryDataSummary";
 import TransactionDetailModal from "../component/TransactionDetailModal";
+import SortModal from "../component/SortModal"; // ✅ 新增
 
 import PortfolioData from "../data/Portfolio.json";
 import { useUser } from "../context/UserContext";
 
 type TransactionData = {
-  UserId?: string;
   senderReceiver: string;
   amount: string;
   transactionType: string;
@@ -32,24 +32,22 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
   const { userId } = useUser();
   const skipPasscode = route?.params?.skipPasscode ?? false;
 
-  // 新增状态，管理日期范围
   const [startDate, setStartDate] = useState<Date>(new Date("2025-05-16"));
   const [endDate, setEndDate] = useState<Date>(new Date("2025-05-17"));
-
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionData | null>(null);
+  const [sortBy, setSortBy] = useState<"date" | "amount">("date"); // ✅ 排序依据
+  const [sortModalVisible, setSortModalVisible] = useState(false); // ✅ 控制排序弹窗
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
 
-  // 过滤并格式化数据时，也可以根据日期范围过滤（如果需要）
   const filteredData: TransactionData[] = PortfolioData.TransactionData
     .filter(tx => tx.UserId === userId)
     .filter(tx => {
-      // 以日期范围过滤交易（这里示例）
       const txDate = new Date(tx.DateTime);
       return txDate >= startDate && txDate <= endDate;
     })
@@ -57,15 +55,28 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
       senderReceiver: tx.SenderReceiver,
       amount: skipPasscode ? "****" : String(tx.Amount),
       transactionType: tx.TransactionType,
-      dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      }),
+      dateTime: new Date(tx.DateTime).toISOString(),
       transactionDetail: tx.TransactionDetail,
       paymentID: tx.PaymentID,
       bankRef: tx.BankRef,
       status: tx.Status,
+    }))
+    .sort((a, b) => {
+      if (sortBy === "date") {
+        return new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
+      } else {
+        const amountA = parseFloat(a.amount.replace(/[^\d.-]/g, "")) || 0;
+        const amountB = parseFloat(b.amount.replace(/[^\d.-]/g, "")) || 0;
+        return amountB - amountA;
+      }
+    })
+    .map(tx => ({
+      ...tx,
+      dateTime: new Date(tx.dateTime).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
     }));
 
   const totalAmount = !skipPasscode
@@ -91,7 +102,6 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     setSelectedTransaction(null);
   };
 
-  // 传递给 TransactionHistoryDataSummary 的回调，用于修改日期
   const handleDateChange = (newStartDate: Date, newEndDate: Date) => {
     setStartDate(newStartDate);
     setEndDate(newEndDate);
@@ -118,7 +128,9 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
         <View style={styles.transactionSection}>
           <View style={styles.transactionHeader}>
             <Text style={styles.transactionTitle}>Transaction</Text>
-            <MaterialIcons name="filter-list" size={24} color="black" />
+            <TouchableOpacity onPress={() => setSortModalVisible(true)}>
+              <MaterialIcons name="filter-list" size={24} color="black" />
+            </TouchableOpacity>
           </View>
 
           <TransactionHistoryDataCard data={filteredData} onPressItem={handlePressItem} />
@@ -129,6 +141,16 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
         visible={modalVisible}
         data={selectedTransaction}
         onClose={handleCloseModal}
+      />
+
+      <SortModal
+        visible={sortModalVisible}
+        onClose={() => setSortModalVisible(false)}
+        onSelect={(option) => {
+          setSortBy(option);
+          setSortModalVisible(false);
+        }}
+        selectedOption={sortBy}
       />
     </SafeAreaView>
   );
