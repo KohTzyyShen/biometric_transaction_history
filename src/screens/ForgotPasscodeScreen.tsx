@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView,
   Platform,
   Alert,
 } from 'react-native';
@@ -24,6 +25,8 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
       Alert.alert(strings.incorrect_passcode_title, strings.passcode_must_be_6_digits);
     } else if (newPasscode !== confirmPasscode) {
       Alert.alert(strings.incorrect_passcode_title, strings.passcodes_do_not_match);
+      setNewPasscode('');
+      setConfirmPasscode('');
     } else {
       setPasscode(newPasscode);
       Alert.alert(strings.reset_passcode, strings.passcode_reset_success, [
@@ -38,51 +41,60 @@ export default function ForgotPasscodeScreen({ navigation }: any) {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
-      <SafeAreaView style={styles.container}>
-        {/* Back Button */}
-        <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
-          <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
-        </TouchableOpacity>
-
-        <View style={styles.body}>
-          <View style={{ alignItems: 'center', gap: 5 }}>
-    <Text style={styles.title}>{strings.forgot_passcode_title}</Text>
-    <Text style={styles.result}>{strings.forgot_passcode_subtitle}</Text>
-  </View>
-          <View style={{ gap: 10 }}>
-            <View>
-              <Text style={styles.label}>{strings.new_passcode_label}</Text>
-              <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                maxLength={6}
-                value={newPasscode}
-                onChangeText={(text) => setNewPasscode(text.replace(/[^0-9]/g, ''))}
-                secureTextEntry={true} 
-              />
-            </View>
-
-            <View>
-              <Text style={styles.label}>{strings.confirm_passcode_label}</Text>
-              <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                maxLength={6}
-                value={confirmPasscode}
-                onChangeText={(text) => setConfirmPasscode(text.replace(/[^0-9]/g, ''))}
-                secureTextEntry={true} 
-
-/>
-            </View>
-          </View>
-
-          <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-            <Text style={styles.confirmText}>{strings.reset_passcode}</Text>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <SafeAreaView style={styles.container}>
+          {/* Back Button */}
+          <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
+            <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
           </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+
+          <View style={styles.body}>
+            {/* Title */}
+            <View style={{ alignItems: 'center', gap: 5 }}>
+              <Text style={styles.title}>{strings.forgot_passcode_title}</Text>
+              <Text style={styles.result}>{strings.forgot_passcode_subtitle}</Text>
+            </View>
+
+            {/* Inputs */}
+            <View style={{ gap: 10 }}>
+              <View>
+                <Text style={styles.label}>{strings.new_passcode_label}</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  maxLength={6}
+                  value={newPasscode}
+                  onChangeText={(text) => setNewPasscode(text.replace(/[^0-9]/g, ''))}
+                  secureTextEntry={true}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.label}>{strings.confirm_passcode_label}</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  maxLength={6}
+                  value={confirmPasscode}
+                  onChangeText={(text) => setConfirmPasscode(text.replace(/[^0-9]/g, ''))}
+                  secureTextEntry={true}
+                />
+              </View>
+            </View>
+
+            {/* Button */}
+            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+              <Text style={styles.confirmText}>{strings.reset_passcode}</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -96,15 +108,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   body: {
-    marginTop: 60,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     gap: 60,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom:0,
   },
   result: {
     fontSize: 16,
