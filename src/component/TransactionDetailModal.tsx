@@ -26,10 +26,19 @@ type Props = {
   onClose: (event: GestureResponderEvent) => void;
 };
 
+// 金额格式化函数
+function formatAmount(amountString: string): string {
+  if (amountString === "****") return "****";
+  const amount = parseFloat(amountString.replace(/[^\d.-]/g, ""));
+  if (isNaN(amount)) return amountString;
+
+  const sign = amount >= 0 ? "+" : "-";
+  return `${sign}RM${Math.abs(amount).toFixed(2)}`;
+}
+
 export default function TransactionDetailModal({ visible, data, onClose }: Props) {
   if (!data) return null;
 
-  // 方便渲染变量列表，字段名与显示名
   const variables = [
     { label: "Receiver/Sender", value: data.senderReceiver },
     { label: "Transaction Type", value: data.transactionType },
@@ -44,10 +53,8 @@ export default function TransactionDetailModal({ visible, data, onClose }: Props
     <Modal transparent visible={visible} animationType="slide">
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          {/* 顶部金额，居中 */}
-          <Text style={styles.amountText}>{data.amount}</Text>
+          <Text style={styles.amountText}>{formatAmount(data.amount)}</Text>
 
-          {/* 变量列表 */}
           <View style={styles.variableList}>
             {variables.map(({ label, value }, index) => (
               <View key={index} style={styles.variableRow}>
@@ -57,13 +64,12 @@ export default function TransactionDetailModal({ visible, data, onClose }: Props
             ))}
           </View>
 
-          {/* 底部区域 */}
           <View style={styles.bottomRow}>
             <View style={styles.iconRow}>
-              <TouchableOpacity onPress={() => { /* TODO: share handler */ }}>
+              <TouchableOpacity onPress={() => {}}>
                 <MaterialCommunityIcons name="share" size={24} color="#000" />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { /* TODO: pdf handler */ }} style={{ marginLeft: 5 }}>
+              <TouchableOpacity onPress={() => {}} style={{ marginLeft: 5 }}>
                 <MaterialCommunityIcons name="file-pdf-box" size={24} color="#000" />
               </TouchableOpacity>
             </View>
