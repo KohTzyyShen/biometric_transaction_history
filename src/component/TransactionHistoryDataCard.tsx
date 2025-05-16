@@ -1,22 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 type TransactionData = {
   senderReceiver: string;
   amount: string;
   transactionType: string;
   dateTime: string;
+  transactionDetail?: string;
+  paymentID?: string;
+  bankRef?: string;
+  status?: string;
 };
 
 type Props = {
   data: TransactionData[];
+  onPressItem: (item: TransactionData) => void;  
 };
 
-export default function TransactionHistoryDataCard({ data }: Props) {
+export default function TransactionHistoryDataCard({ data, onPressItem }: Props) {
   return (
     <View style={styles.listContainer}>
       {data.map((item, index) => (
-        <View key={index} style={styles.cardContainer}>
+        <TouchableOpacity
+          key={index}
+          style={styles.cardContainer}
+          onPress={() => onPressItem(item)}  
+          activeOpacity={0.7}
+        >
           <View style={styles.row}>
             <Text style={styles.senderReceiver}>{item.senderReceiver}</Text>
             <Text style={styles.amount}>{item.amount}</Text>
@@ -29,7 +39,7 @@ export default function TransactionHistoryDataCard({ data }: Props) {
             </View>
             <View style={styles.line} />
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -37,7 +47,7 @@ export default function TransactionHistoryDataCard({ data }: Props) {
 
 const styles = StyleSheet.create({
   listContainer: {
-    marginHorizontal:10,
+    marginHorizontal: 10,
     flexDirection: 'column',
     gap: 13,
   },
@@ -48,7 +58,7 @@ const styles = StyleSheet.create({
   },
   transactionAndLine: {
     flexDirection: 'column',
-    gap: 13,  
+    gap: 13,
   },
   row: {
     flexDirection: 'row',
