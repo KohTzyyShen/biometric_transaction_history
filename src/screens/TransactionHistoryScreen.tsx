@@ -32,6 +32,10 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
   const { userId } = useUser();
   const skipPasscode = route?.params?.skipPasscode ?? false;
 
+  // 新增状态，管理日期范围
+  const [startDate, setStartDate] = useState<Date>(new Date("2025-05-16"));
+  const [endDate, setEndDate] = useState<Date>(new Date("2025-05-17"));
+
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionData | null>(null);
@@ -41,31 +45,40 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
 
+  // 过滤并格式化数据时，也可以根据日期范围过滤（如果需要）
   const filteredData: TransactionData[] = PortfolioData.TransactionData
-  .filter(tx => tx.UserId === userId)
-  .map(tx => ({
-    senderReceiver: tx.SenderReceiver,
-    amount: skipPasscode ? "****" : String(tx.Amount),
-    transactionType: tx.TransactionType,
-    dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-    transactionDetail: tx.TransactionDetail,
-    paymentID: tx.PaymentID,
-    bankRef: tx.BankRef,
-    status: tx.Status,
-  }));
+    .filter(tx => tx.UserId === userId)
+    .filter(tx => {
+      // 以日期范围过滤交易（这里示例）
+      const txDate = new Date(tx.DateTime);
+      return txDate >= startDate && txDate <= endDate;
+    })
+    .map(tx => ({
+      senderReceiver: tx.SenderReceiver,
+      amount: skipPasscode ? "****" : String(tx.Amount),
+      transactionType: tx.TransactionType,
+      dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      transactionDetail: tx.TransactionDetail,
+      paymentID: tx.PaymentID,
+      bankRef: tx.BankRef,
+      status: tx.Status,
+    }));
 
   const totalAmount = !skipPasscode
-    ? PortfolioData.TransactionData.filter((tx) => tx.UserId === userId).reduce(
-        (acc, tx) => {
+    ? PortfolioData.TransactionData
+        .filter((tx) => tx.UserId === userId)
+        .filter((tx) => {
+          const txDate = new Date(tx.DateTime);
+          return txDate >= startDate && txDate <= endDate;
+        })
+        .reduce((acc, tx) => {
           const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
           return acc + (isNaN(numericValue) ? 0 : numericValue);
-        },
-        0
-      )
+        }, 0)
     : 0;
 
   const handlePressItem = (item: TransactionData) => {
@@ -73,10 +86,15 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     setModalVisible(true);
   };
 
-
   const handleCloseModal = () => {
     setModalVisible(false);
     setSelectedTransaction(null);
+  };
+
+  // 传递给 TransactionHistoryDataSummary 的回调，用于修改日期
+  const handleDateChange = (newStartDate: Date, newEndDate: Date) => {
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
   };
 
   return (
@@ -89,7 +107,13 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
           <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
         </TouchableOpacity>
 
-        <TransactionHistoryDataSummary totalAmount={totalAmount} skipPasscode={skipPasscode} />
+        <TransactionHistoryDataSummary
+          totalAmount={totalAmount}
+          skipPasscode={skipPasscode}
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
+        />
 
         <View style={styles.transactionSection}>
           <View style={styles.transactionHeader}>

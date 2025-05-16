@@ -1,19 +1,50 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type Props = {
   totalAmount?: number;
   skipPasscode: boolean;
+  startDate: Date;
+  endDate: Date;
+  onDateChange: (newStartDate: Date, newEndDate: Date) => void;
 };
 
-export default function TransactionHistoryDataSummary({ totalAmount, skipPasscode }: Props) {
+export default function TransactionHistoryDataSummary({
+  totalAmount,
+  skipPasscode,
+  startDate,
+  endDate,
+  onDateChange,
+}: Props) {
+  const [showStartPicker, setShowStartPicker] = useState(false);
+  const [showEndPicker, setShowEndPicker] = useState(false);
+
   function formatAmount(amount?: number): string {
     if (amount === undefined || amount === null) return '';
     const sign = amount >= 0 ? '+' : '-';
     return `${sign}RM${Math.abs(amount).toFixed(2)}`;
   }
+
+  function formatDate(date: Date): string {
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  const onChangeStart = (event: any, selectedDate?: Date) => {
+    setShowStartPicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      onDateChange(selectedDate, endDate); // 调用合并的回调
+    }
+  };
+
+  const onChangeEnd = (event: any, selectedDate?: Date) => {
+    setShowEndPicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      onDateChange(startDate, selectedDate); // 调用合并的回调
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -29,12 +60,38 @@ export default function TransactionHistoryDataSummary({ totalAmount, skipPasscod
 
       <View style={[styles.row, styles.dateRow]}>
         <View style={styles.dateContent}>
-          <Text style={styles.dateText}>16 May 2025</Text>
+          <TouchableOpacity onPress={() => setShowStartPicker(true)}>
+            <Text style={styles.dateText}>{formatDate(startDate)}</Text>
+          </TouchableOpacity>
+
           <Text style={styles.dateSeparator}>-</Text>
-          <Text style={styles.dateText}>17 May 2025</Text>
+
+          <TouchableOpacity onPress={() => setShowEndPicker(true)}>
+            <Text style={styles.dateText}>{formatDate(endDate)}</Text>
+          </TouchableOpacity>
         </View>
         <AntDesign name="calendar" size={24} color="black" />
       </View>
+
+      {showStartPicker && (
+        <DateTimePicker
+          value={startDate}
+          mode="date"
+          display="default"
+          onChange={onChangeStart}
+          maximumDate={endDate}
+        />
+      )}
+
+      {showEndPicker && (
+        <DateTimePicker
+          value={endDate}
+          mode="date"
+          display="default"
+          onChange={onChangeEnd}
+          minimumDate={startDate}
+        />
+      )}
     </View>
   );
 }
@@ -73,6 +130,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 14,
     color: '#000',
+    textDecorationLine: 'underline',
   },
   dateSeparator: {
     fontSize: 14,
