@@ -12,7 +12,7 @@ import { useUser } from '../context/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import strings from '../constants/strings';
 import PasscodeDots from '../component/PasscodeDots';
-import NumberPad from '../component/NumberPad';  // 数字键盘组件
+import NumberPad from '../component/NumberPad';  
 
 export default function PasscodeScreen({ navigation }: any) {
   const { authenticate } = useAuth();
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   skipText: {
-    color: '#007bff',
+    color: '#0000e6',
     fontSize: 16,
   },
   body: {
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
   forgottext: {
     fontSize: 16,
-    color: '#007bff',
+    color: '#0000e6',
   },
 });

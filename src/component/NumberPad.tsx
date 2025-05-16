@@ -31,13 +31,11 @@ export default function NumberPad({ value, maxLength = 6, onChange }: NumberPadP
       ].map((row, rowIndex) => (
         <View key={rowIndex} style={styles.row}>
           {row.map((item, i) => {
-            // 第一行第一个位置不显示空白按钮
             if (rowIndex === 0 && i === 0 && item === '') {
-              return null; // 这里不渲染
+              return null; 
             }
 
             if (item === '') {
-              // 其他空白格渲染透明占位，避免排版错乱
               return <View key={i} style={[styles.button, { backgroundColor: 'transparent' }]} />;
             }
             if (item === 'delete') {

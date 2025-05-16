@@ -1,6 +1,6 @@
 const strings = {
   transactionTitle: "Transaction",
-  enter_passcode: "Enter pass code",
+  enter_passcode: "Enter Passcode",
   forgot_passcode: "Forgot Passcode?",
   reset_passcode: "Reset passcode",
   incorrect_passcode_title: "Incorrect passcode",

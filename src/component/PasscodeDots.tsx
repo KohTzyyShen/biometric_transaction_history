@@ -3,8 +3,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 interface PasscodeDotsProps {
-  length: number; // 当前输入的数字个数
-  maxLength?: number; // 最大长度，默认6
+  length: number; 
+  maxLength?: number; 
 }
 
 export default function PasscodeDots({ length, maxLength = 6 }: PasscodeDotsProps) {
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   filledDot: {
-    color: '#007bff', // 深蓝
+    color: '#007bff', 
   },
   emptyDot: {
-    color: '#86C1FF', // 浅蓝
+    color: '#e6f0ff', 
   },
 });

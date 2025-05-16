@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom:0,
   },
   result: {
     fontSize: 16,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     marginTop: 20,
-    backgroundColor: '#007bff',
+    backgroundColor: '#0000e6',
     paddingHorizontal: 40,
     paddingVertical: 10,
     borderRadius: 8,

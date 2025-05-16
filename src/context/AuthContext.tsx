@@ -45,18 +45,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authenticateWithLocalAuth = async (): Promise<boolean> => {
     const hasHardware = await LocalAuthentication.hasHardwareAsync();
     if (!hasHardware) {
-      // 设备不支持生物认证，返回false表示需要用Passcode
+      
       return false;
     }
 
     const isEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (!isEnrolled) {
-      // 设备没有注册任何生物认证信息，返回false
+      
       return false;
     }
 
     const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Authenticate to view your transactions",
+      promptMessage: "Biometric Authenticate",
       fallbackLabel: "Use Passcode",
       cancelLabel: "Cancel",
       disableDeviceFallback: true,
