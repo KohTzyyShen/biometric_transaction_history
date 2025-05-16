@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 type Props = {
-  totalAmount?: number;  // 总金额，选传
-  skipPasscode: boolean; // 是否跳过密码，决定金额是否隐藏
+  totalAmount?: number;  
+  skipPasscode: boolean; 
 };
 
 export default function TransactionHistoryDataSummary({ totalAmount, skipPasscode }: Props) {
