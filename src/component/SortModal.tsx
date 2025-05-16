@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   option: {
     paddingVertical: 10,
+    paddingHorizontal: 5,
   },
   selected: {
     backgroundColor: "#eee",

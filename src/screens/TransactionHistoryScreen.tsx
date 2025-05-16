@@ -28,12 +28,21 @@ type TransactionData = {
   status?: string;
 };
 
+const getCurrentMonthDateRange = () => {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1);
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  return { start, end };
+};
+
 export default function TransactionHistoryScreen({ navigation, route }: any) {
   const { userId } = useUser();
   const skipPasscode = route?.params?.skipPasscode ?? false;
 
-  const [startDate, setStartDate] = useState<Date>(new Date("2025-05-16"));
-  const [endDate, setEndDate] = useState<Date>(new Date("2025-05-17"));
+  const { start, end } = getCurrentMonthDateRange();
+  const [startDate, setStartDate] = useState<Date>(start);
+  const [endDate, setEndDate] = useState<Date>(end);
+
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionData | null>(null);
@@ -90,7 +99,6 @@ const totalAmount = !skipPasscode
         const numericValue = Number(String(tx.Amount).replace(/[^\d.-]/g, ""));
         if (isNaN(numericValue)) return acc;
 
-        // 根据 transactionType 判断金额符号
         const signedValue = tx.TransactionType === "Moved" ? -Math.abs(numericValue) : Math.abs(numericValue);
 
         return acc + signedValue;
@@ -166,16 +174,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    // 去掉 paddingHorizontal: 20
+    
   },
   backIcon: {
     marginTop: 35,
     width: 40,
     height: 30,
-    marginHorizontal: 20, // 给返回按钮左右留点距离
+    marginHorizontal: 20, 
   },
   transactionSection: {
-    marginHorizontal: 20, // 这里改成 20，保持整体左右距离
+    marginHorizontal: 20,
     marginTop: 60,
     gap: 20,
     flex: 1,
