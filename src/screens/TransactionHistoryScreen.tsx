@@ -16,7 +16,6 @@ import TransactionDetailModal from "../component/TransactionDetailModal";
 import PortfolioData from "../data/Portfolio.json";
 import { useUser } from "../context/UserContext";
 
-// 扩展字段，确保包含所有详情字段
 type TransactionData = {
   UserId?: string;
   senderReceiver: string;
@@ -42,7 +41,6 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
 
-  // 这里用展开符号 ...tx 保留所有字段，仅覆盖 amount 和 dateTime 格式
   const filteredData: TransactionData[] = PortfolioData.TransactionData
   .filter(tx => tx.UserId === userId)
   .map(tx => ({
@@ -70,7 +68,6 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
       )
     : 0;
 
-  // 点击某条交易，打开详情 Modal
   const handlePressItem = (item: TransactionData) => {
     setSelectedTransaction(item);
     setModalVisible(true);

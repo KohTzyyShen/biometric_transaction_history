@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type TransactionData = {
   senderReceiver: string;
   amount: string;
   transactionType: string;
   dateTime: string;
-  transactionDetail?: string; // 新增可选字段
+  transactionDetail?: string; 
   paymentID?: string;
   bankRef?: string;
   status?: string;
@@ -28,57 +29,49 @@ type Props = {
 export default function TransactionDetailModal({ visible, data, onClose }: Props) {
   if (!data) return null;
 
+  // 方便渲染变量列表，字段名与显示名
+  const variables = [
+    { label: "Receiver/Sender", value: data.senderReceiver },
+    { label: "Transaction Type", value: data.transactionType },
+    { label: "Date", value: data.dateTime },
+    data.transactionDetail ? { label: "Detail", value: data.transactionDetail } : null,
+    data.paymentID ? { label: "Payment ID", value: data.paymentID } : null,
+    data.bankRef ? { label: "Bank Ref", value: data.bankRef } : null,
+    data.status ? { label: "Status", value: data.status } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+
   return (
     <Modal transparent visible={visible} animationType="slide">
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.title}>Transaction Details</Text>
+          {/* 顶部金额，居中 */}
+          <Text style={styles.amountText}>{data.amount}</Text>
 
-          <Text>
-            <Text style={styles.label}>Receiver/Sender: </Text>
-            {data.senderReceiver}
-          </Text>
-          <Text>
-            <Text style={styles.label}>Amount: </Text>
-            {data.amount}
-          </Text>
-          <Text>
-            <Text style={styles.label}>Type: </Text>
-            {data.transactionType}
-          </Text>
-          <Text>
-            <Text style={styles.label}>Date: </Text>
-            {data.dateTime}
-          </Text>
-          {/* 新增字段展示 */}
-          {data.transactionDetail && (
-            <Text>
-              <Text style={styles.label}>Detail: </Text>
-              {data.transactionDetail}
-            </Text>
-          )}
-          {data.paymentID && (
-            <Text>
-              <Text style={styles.label}>Payment ID: </Text>
-              {data.paymentID}
-            </Text>
-          )}
-          {data.bankRef && (
-            <Text>
-              <Text style={styles.label}>Bank Ref: </Text>
-              {data.bankRef}
-            </Text>
-          )}
-          {data.status && (
-            <Text>
-              <Text style={styles.label}>Status: </Text>
-              {data.status}
-            </Text>
-          )}
+          {/* 变量列表 */}
+          <View style={styles.variableList}>
+            {variables.map(({ label, value }, index) => (
+              <View key={index} style={styles.variableRow}>
+                <Text style={styles.variableLabel}>{label}</Text>
+                <Text style={styles.variableValue}>{value}</Text>
+              </View>
+            ))}
+          </View>
 
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
+          {/* 底部区域 */}
+          <View style={styles.bottomRow}>
+            <View style={styles.iconRow}>
+              <TouchableOpacity onPress={() => { /* TODO: share handler */ }}>
+                <MaterialCommunityIcons name="share" size={24} color="#000" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { /* TODO: pdf handler */ }} style={{ marginLeft: 5 }}>
+                <MaterialCommunityIcons name="file-pdf-box" size={24} color="#000" />
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -94,25 +87,47 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "white",
-    padding: 20,
+    paddingHorizontal: 26,
+    paddingVertical: 30,
     borderRadius: 12,
     width: "80%",
-    alignItems: "center",
+    gap: 30,
   },
-  title: {
+  amountText: {
     fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 15,
+    fontSize: 24,
+    textAlign: "center",
   },
-  label: {
+  variableList: {
+    gap: 13,
+  },
+  variableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  variableLabel: {
     fontWeight: "600",
   },
+  variableValue: {
+    textAlign: "right",
+    flexShrink: 1,
+  },
+  bottomRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  iconRow: {
+    flexDirection: "row",
+    gap: 5,
+  },
   closeButton: {
-    marginTop: 20,
-    padding: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     backgroundColor: "#2196F3",
     borderRadius: 8,
-    width: "100%",
+    justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {

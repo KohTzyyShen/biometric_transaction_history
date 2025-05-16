@@ -8,14 +8,21 @@ type Props = {
 };
 
 export default function TransactionHistoryDataSummary({ totalAmount, skipPasscode }: Props) {
+
+  function formatAmount(amount?: number): string {
+    if (amount === undefined || amount === null) return '';
+    const sign = amount >= 0 ? '+' : '-';
+    return `${sign}RM${Math.abs(amount).toFixed(2)}`;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <MaterialCommunityIcons name="bitcoin" size={40} color="#f2a900" />
         <View style={styles.totalSpentColumn}>
-          <Text style={styles.totalSpentText}>Total spent</Text>
+          <Text style={styles.totalSpentText}>Total amount</Text>
           <Text style={styles.totalSpentAmount}>
-            {skipPasscode || totalAmount === undefined ? '****' : `RM ${totalAmount.toFixed(2)}`}
+            {skipPasscode ? '****' : formatAmount(totalAmount)}
           </Text>
         </View>
       </View>
