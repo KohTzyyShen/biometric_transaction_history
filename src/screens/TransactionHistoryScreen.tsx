@@ -14,14 +14,18 @@ import TransactionHistoryDataSummary from "../component/TransactionHistoryDataSu
 import PortfolioData from "../data/Portfolio.json";
 import { useUser } from "../context/UserContext"; 
 
-export default function TransactionHistoryScreen({ navigation }: any) {
-  const { userId } = useUser(); 
+export default function TransactionHistoryScreen({ navigation, route }: any) {
+  const { userId } = useUser();
+
+  // route.params.skipPasscode 会是true，如果用户跳过passcode
+  const skipPasscode = route?.params?.skipPasscode ?? false;
 
   const filteredData = PortfolioData.TransactionData
     .filter((tx) => tx.UserId === userId)
     .map((tx) => ({
       senderReceiver: tx.SenderReceiver,
-      amount: tx.Amount,
+      // 根据skipPasscode决定金额是显示原值还是****遮盖
+      amount: skipPasscode ? "****" : tx.Amount,
       transactionType: tx.TransactionType,
       dateTime: new Date(tx.DateTime).toLocaleDateString("en-GB", {
         day: "numeric",
