@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import TransactionHistoryDataCard from "../component/TransactionHistoryDataCard";
@@ -17,10 +18,19 @@ import { useUser } from "../context/UserContext";
 export default function TransactionHistoryScreen({ navigation, route }: any) {
   const { userId } = useUser();
 
-  // route.params.skipPasscode 会是 true，如果用户跳过 passcode
   const skipPasscode = route?.params?.skipPasscode ?? false;
 
-  // 过滤并格式化数据，amount 始终保持为 string 类型（如需遮盖则为 "****"）
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    // 模拟1.5秒刷新过程
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
   const filteredData = PortfolioData.TransactionData.filter(
     (tx) => tx.UserId === userId
   ).map((tx) => ({
@@ -34,12 +44,11 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
     }),
   }));
 
-  // 正确计算总金额，仅当 skipPasscode 为 false 时才执行加总
   const totalAmount = !skipPasscode
     ? PortfolioData.TransactionData.filter((tx) => tx.UserId === userId).reduce(
         (acc, tx) => {
           const numericValue = Number(
-            String(tx.Amount).replace(/[^\d.-]/g, "") // 去掉任何非数字字符，如 RM、空格
+            String(tx.Amount).replace(/[^\d.-]/g, "")
           );
           return acc + (isNaN(numericValue) ? 0 : numericValue);
         },
@@ -49,29 +58,33 @@ export default function TransactionHistoryScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        style={styles.backIcon}
-        onPress={() => navigation.navigate("Home")}
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
-        <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.backIcon}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
+        </TouchableOpacity>
 
-      {/* 传入 totalAmount 和 skipPasscode */}
-      <TransactionHistoryDataSummary
-        totalAmount={totalAmount}
-        skipPasscode={skipPasscode}
-      />
+        <TransactionHistoryDataSummary
+          totalAmount={totalAmount}
+          skipPasscode={skipPasscode}
+        />
 
-      <View style={styles.transactionSection}>
-        <View style={styles.transactionHeader}>
-          <Text style={styles.transactionTitle}>Transaction</Text>
-          <MaterialIcons name="filter-list" size={24} color="black" />
-        </View>
+        <View style={styles.transactionSection}>
+          <View style={styles.transactionHeader}>
+            <Text style={styles.transactionTitle}>Transaction</Text>
+            <MaterialIcons name="filter-list" size={24} color="black" />
+          </View>
 
-        <ScrollView style={{ flex: 1 }}>
           <TransactionHistoryDataCard data={filteredData} />
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
