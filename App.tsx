@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { Icon } from './src/styles/Icon';  
+import AppBar from "./src/layouts/AppBar";
 
 const App = () => {
   return (
@@ -8,6 +9,14 @@ const App = () => {
       <View style={styles.center}>
         <Text style={styles.text}>Hello, this is a test component!</Text>
         <Icon name="deleteicon" />
+         <AppBar
+        iconBoolean={true}
+        iconName="deleteicon" 
+        leftTextBoolean={true}
+        leftText="Home"
+        rightTextBoolean={true}
+        rightText="Edit"
+      />
       </View>
     </SafeAreaView>
   );

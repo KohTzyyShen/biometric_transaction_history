@@ -1,6 +1,14 @@
+//src/styles/TextStyle.ts
+
+/* 
+用法：
+import TextStyle from 'src/styles/TextStyle';
+
+<Text style={TextStyle.title1}>这是标题1</Text>
+*/
+
 import { StyleSheet } from 'react-native';
 
-// 分层定义基础样式常量
 const TextSize = {
   size1: 28,
   size2: 22,
