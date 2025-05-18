@@ -14,7 +14,7 @@ const App = () => {
     leftText: "Home",
     rightTextBoolean: true,
     rightText: "Edit"
-  } as const;;
+    } as const;;
 
  <AppBar config={appBarConfig} />
 */

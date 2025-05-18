@@ -5,7 +5,6 @@
 import styles from "./AppBar.styles";
 
 <Text style={styles.rightText}>{rightText}</Text>
-
 style={styles.}
 */
 

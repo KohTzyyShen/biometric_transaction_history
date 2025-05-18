@@ -13,7 +13,7 @@ const App = () => {
     leftText: "Home",
     rightTextBoolean: true,
     rightText: "Edit"
-  }as const;;
+  } as const;;
   
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -21,7 +21,6 @@ const App = () => {
         <Text style={styles.text}>Hello, this is a test component!</Text>
         <Icon name="deleteicon" />
         <AppBar config={appBarConfig} />
-
       </View>
     </SafeAreaView>
   );
