@@ -21,78 +21,38 @@ import {
   Strings,
   TextStyle,
 } from "../../styles";
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../utils/Dimensions';
+
 
 const styles = StyleSheet.create({
-
-//    <SafeAreaView style={[{ width: "100%" }, Spacing.paddingBase1]}>
   container: {
     width: "100%",
-    ...Spacing.paddingBase1,
+    height: SCREEN_HEIGHT * 0.1,
+    ...Spacing.appBarPaddingBase,
+    ...Alignment.alignTopCenter,
   },
 
-/*          <View
-        style={[
-          Alignment.alignLeft,
-          {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          },
-        ]}
-      >
-*/
-   contentWrapper: {
-   ...Alignment.alignLeft,
-   flexDirection: "row",
-   justifyContent: "space-between",
-   alignItems: "center",
+  contentWrapper: {
+    width: "100%",
+    ...Alignment.alignTopCenterAuto,
+    flexDirection: "row",
+    marginTop:10,
   },
 
-/* 
-<View
-          style={[
-            {
-              flexDirection: "row",
-              alignItems: "center",
-              gap: Spacing.tiny,
-            },
-          ]}
-        >
-*/
-//LeftGroup (icon+text)
-leftGroup: {
+  //leftGroup=(icon+text)
+  leftGroup: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.tiny,
   },
 
+  leftGroupText: {
+    ...TextStyle.appBar,
+  },
 
-/* 
-<Text
-              style={[
-                TextStyle.title2,
-                {
-                  color: UnifiedColor.text1,
-                  marginLeft: Spacing.tiny,
-                },
-              ]}
-            > 
-*/
-leftGroupText:{
-...TextStyle.title2,
-color: UnifiedColor.text1,
-marginLeft: Spacing.tiny,
-},
-
-/*
-<Text style={[TextStyle.title2, { color: UnifiedColor.text1 }]}>
-            {rightText}
-</Text> 
-*/
-//RightGroup Text
-rightText: {
-    ...TextStyle.title2,
-    color: UnifiedColor.text1,
+  //RightGroup Text
+  rightText: {
+    ...TextStyle.appBar,
   },
 });
 

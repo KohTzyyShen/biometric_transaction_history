@@ -25,7 +25,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./AppBar.styles";
 import { AppBarConfig } from "./AppBarConfig";
 
-
 import {
   Radius,
   Alignment,
@@ -55,7 +54,7 @@ const AppBar: React.FC<Props> = ({ config }) => {
   } = config;
   
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       
       <View
         style={styles.contentWrapper}
@@ -79,7 +78,7 @@ const AppBar: React.FC<Props> = ({ config }) => {
           </Text>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

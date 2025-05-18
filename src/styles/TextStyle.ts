@@ -8,11 +8,13 @@ import TextStyle from 'src/styles/TextStyle';
 */
 
 import { StyleSheet } from 'react-native';
+import { Color, UnifiedColor } from './Color';
+
 
 const TextSize = {
   size1: 28,
   size2: 22,
-  size3: 16,
+  size3: 18,
   size4: 14,
   size5: 12,
 };
@@ -23,6 +25,7 @@ const FontWeight = {
   weight3: '400',
 } as const;
 
+/*
 const LineHeight = {
   height1: 36,
   height2: 30,
@@ -30,8 +33,17 @@ const LineHeight = {
   height4: 20,
   height5: 18,
 };
+*/
 
 const TextStyle = StyleSheet.create({
+appBar: {
+    fontSize: TextSize.size3,
+    fontWeight: FontWeight.weight3,
+    color: UnifiedColor.text2,
+  },
+
+
+    /*
   title1: {
     fontSize: TextSize.size1,
     fontWeight: FontWeight.weight1,
@@ -52,6 +64,7 @@ const TextStyle = StyleSheet.create({
     fontWeight: FontWeight.weight3,
     lineHeight: LineHeight.height5,
   },
+  */
 });
 
 export default TextStyle;

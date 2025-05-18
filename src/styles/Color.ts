@@ -31,6 +31,7 @@ const UnifiedColor = {
   text3: Color.two,
   background: Color.theme,
   icon1: Color.theme,
+  appBar: Color.one,
 };
 
 const gradientBackground = {
@@ -39,8 +40,8 @@ const gradientBackground = {
     "#ffffff",            
     "#ffffff",           
     "rgba(166,58,255,0.2)" 
-  ],
-  locations: [0, 0.28, 0.59, 1],
+  ] as const,
+  locations: [0, 0.28, 0.59, 1] as const,
   start: { x: 1, y: 0 },
   end: { x: 0, y: 1 },
 };

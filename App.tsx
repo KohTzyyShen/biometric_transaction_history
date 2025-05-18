@@ -1,47 +1,25 @@
-//App.tsx
-import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
-import { Icon } from './src/styles/Icon';  
-import AppBar from "./src/layouts/AppBar/AppBar";
+// App.tsx
 
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const appBarConfig = {
-    iconBoolean: true,
-    iconName: "deleteicon",
-    leftTextBoolean: true,
-    leftText: "Home",
-    rightTextBoolean: true,
-    rightText: "Edit"
-  } as const;;
-  
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.center}>
-        <Text style={styles.text}>Hello, this is a test component!</Text>
-        <Icon name="deleteicon" />
-        <AppBar config={appBarConfig} />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }} // 关闭React Navigation自带的header，因为你用BaseScreenLayout里的AppBar了
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',  
-    alignItems: 'center',     
-  },
-  text: {
-    fontSize: 18,
-    color: '#333',
-  },
-});
-
 export default App;
-
-

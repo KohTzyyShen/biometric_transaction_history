@@ -14,10 +14,23 @@ const Alignment: { [key: string]: ViewStyle } = {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
+
+  alignTopLeftAuto: {
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+
   alignTopCenter: {
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+
+ alignTopCenterAuto: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  
   alignTopRight: {
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
