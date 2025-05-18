@@ -1,22 +1,27 @@
+//App.tsx
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { Icon } from './src/styles/Icon';  
-import AppBar from "./src/layouts/AppBar";
+import AppBar from "./src/layouts/AppBar/AppBar";
+
 
 const App = () => {
+  const appBarConfig = {
+    iconBoolean: true,
+    iconName: "deleteicon",
+    leftTextBoolean: true,
+    leftText: "Home",
+    rightTextBoolean: true,
+    rightText: "Edit"
+  }as const;;
+  
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.center}>
         <Text style={styles.text}>Hello, this is a test component!</Text>
         <Icon name="deleteicon" />
-         <AppBar
-        iconBoolean={true}
-        iconName="deleteicon" 
-        leftTextBoolean={true}
-        leftText="Home"
-        rightTextBoolean={true}
-        rightText="Edit"
-      />
+        <AppBar config={appBarConfig} />
+
       </View>
     </SafeAreaView>
   );
