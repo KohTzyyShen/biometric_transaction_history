@@ -1,3 +1,4 @@
+//src/styles/typography.ts
 import { TextStyle } from 'react-native';
 
 const Typography: { [key: string]: TextStyle } = {

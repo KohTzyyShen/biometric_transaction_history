@@ -1,3 +1,4 @@
+//src/screens/HomeScreen.tsx
 import React from "react";
 import { SafeAreaView, View, Text, Button, StyleSheet, Alert } from "react-native";
 import PortfolioData from "../data/Portfolio.json";

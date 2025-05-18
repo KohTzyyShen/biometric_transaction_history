@@ -29,12 +29,13 @@ const styles = StyleSheet.create({
    ...Alignment.alignTopLeft
   },
 
+  /*
     contentWrapper: {
-   width: "100%",
-   height:"100%",
+    width: "100%",
+    height:"100%",
    ...Alignment.alignTopLeft
   },
-
+  */
 });
 
 export default styles;

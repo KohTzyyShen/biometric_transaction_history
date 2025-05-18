@@ -1,5 +1,21 @@
 //src/styles/index.ts
 
+/*
+用法：
+
+import {
+  Radius,
+  Alignment,
+  Color,
+  IconMap,
+  UnifiedColor,
+  gradientBackground,
+  Icon,
+  Spacing,
+  Strings,
+  TextStyle,
+} from "../../styles";
+ */
 export { default as Alignment } from './Alignment';
 export { Color, UnifiedColor, gradientBackground } from './Color';
 export { Icon, IconMap  } from './Icon';

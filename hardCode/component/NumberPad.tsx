@@ -1,4 +1,4 @@
-// NumberPad.tsx
+// src/component/NumberPad.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,7 +8,6 @@ interface NumberPadProps {
   maxLength?: number;
   onChange: (val: string) => void;
 }
-// NumberPad.tsx 仅修改关键部分
 
 export default function NumberPad({ value, maxLength = 6, onChange }: NumberPadProps) {
   const handlePress = (num: string) => {

@@ -1,3 +1,4 @@
+//src/constants/strings.ts
 const strings = {
   transactionTitle: "Transaction",
   enter_passcode: "Enter Passcode",
