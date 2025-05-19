@@ -1,34 +1,36 @@
-import { StyleSheet, Text, View } from "react-native";
+//app/index.tsx
 
-export default function Page() {
+import React from "react";
+import { Text, View, Button } from "react-native";
+import BaseScreenLayout from "../src/layouts/BaseScreenLayout/BaseScreenLayout";
+import { AppBarConfig } from "../src/layouts/AppBar/AppBarConfig";
+import { useRouter } from 'expo-router';
+
+import { gradientBackground,TextStyle } from "../src/styles";
+
+import { LinearGradient } from "expo-linear-gradient";
+
+
+
+const appBarConfig: AppBarConfig = {
+ iconBoolean: true,
+  iconName: "backIcon", 
+  leftTextBoolean: true,
+  leftText: "Home",
+  rightTextBoolean: true,
+  rightText: "Skip",
+};
+
+const HomeScreen = () => {
+    const router = useRouter(); 
+
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
-      </View>
-    </View>
+    <LinearGradient {...gradientBackground} style={{ flex: 1 }}>
+    <BaseScreenLayout appBarConfig={appBarConfig}>
+      <Button title="Go to Transaction History" onPress={() => router.navigate('/TransactionHistory')} />
+    </BaseScreenLayout>
+    </LinearGradient>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-});
+};
+ 
+export default HomeScreen;
