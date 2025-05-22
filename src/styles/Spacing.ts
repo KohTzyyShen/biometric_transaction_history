@@ -22,8 +22,20 @@ const Spacing = {
   paddingBase1: {
     paddingTop: 12,
     paddingBottom: 12,
-    paddingRight: 20,
-    paddingLeft: 20,
+    paddingRight: 30,
+    paddingLeft: 30,
+  },
+
+  bottomButtonContentPaddingBase: {
+    paddingTop: 6,
+    paddingBottom:8,
+  },
+
+    bottomButtonWidthPaddingBase: {
+    paddingTop: 20,
+    paddingBottom:20,
+    paddingRight: 28,
+    paddingLeft: 28,
   },
 
   appBarPaddingBase: {

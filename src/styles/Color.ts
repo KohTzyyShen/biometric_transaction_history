@@ -19,8 +19,9 @@ color:UnifiedColor.background
 const Color = {
   theme: '#0000e6',
   one: '#000000',
-  two: '#000000',
-  four: '#000000',
+  two: '#ffffff',
+  three: '#4f4f4f',
+  four:"bababa",
   background: '#000000',
 };
 
@@ -29,7 +30,10 @@ const UnifiedColor = {
   text1: Color.theme,
   text2: Color.one,
   text3: Color.two,
-  background: Color.theme,
+  text4: Color.three,
+  text5: Color.four,
+  background1: Color.theme,
+  background2: Color.two,
   icon1: Color.theme,
   appBar: Color.one,
 };

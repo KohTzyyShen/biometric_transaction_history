@@ -4,7 +4,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from "./app";
+import HomeScreen from "./app/index";
 import { useRouter } from 'expo-router';
 
 

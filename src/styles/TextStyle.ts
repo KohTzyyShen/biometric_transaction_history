@@ -12,11 +12,12 @@ import { Color, UnifiedColor } from './Color';
 
 
 const TextSize = {
-  size1: 28,
-  size2: 22,
+  size1: 12,
+  size2: 14,
   size3: 18,
-  size4: 14,
-  size5: 12,
+  size4: 22,
+  size5: 28,
+  size6: 32,
 };
 
 const FontWeight = {
@@ -36,12 +37,37 @@ const LineHeight = {
 */
 
 const TextStyle = StyleSheet.create({
-appBar: {
+
+  Text1:{
+    fontSize: TextSize.size6,
+    fontWeight: FontWeight.weight1,
+    color: UnifiedColor.text1,
+  },
+  
+  Text2:{
+    fontSize: TextSize.size4,
+    fontWeight: FontWeight.weight2,
+    color: UnifiedColor.text2,
+  },
+  
+   Body1:{
+    fontSize: TextSize.size3,
+    fontWeight: FontWeight.weight3,
+    color: UnifiedColor.text4,
+  },
+  
+//Components&Layouit  
+  appBar: {
     fontSize: TextSize.size3,
     fontWeight: FontWeight.weight3,
     color: UnifiedColor.text2,
   },
 
+  bottomButton: {
+    fontSize: TextSize.size3,
+    fontWeight: FontWeight.weight3,
+    color: UnifiedColor.text3,
+  },
 
     /*
   title1: {

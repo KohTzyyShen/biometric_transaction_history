@@ -10,6 +10,11 @@ text: Strings.tryAgain
 
 const Strings = {
   //HomeScreen
+  greeting:'Hi User',
+  greeting2:'How can I help you today?',
+  homeScreenButton:"Transaction History",
+
+  //AppBar
   appName: 'My Finance App',
   skip:'Skip',
   //XxScreen

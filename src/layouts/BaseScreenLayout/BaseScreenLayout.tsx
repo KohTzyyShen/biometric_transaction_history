@@ -40,9 +40,7 @@ const BaseScreenLayout: React.FC<BaseScreenLayoutProps> = ({ appBarConfig, child
   return (
     <SafeAreaView style={styles.container}>
       {appBarConfig && <AppBar config={appBarConfig} />}
-    
       {children} 
-           
     </SafeAreaView>
   );
 };
